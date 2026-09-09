@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos — HES Atacado</title>
+    <link rel="stylesheet" href="../css/produtos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo" onclick="window.location.href='http://127.0.0.1:8000/admin/'" style="cursor: pointer;" title="HES Atacado">
+            <img src="../img/logo.png" alt="HES Atacado" class="logo-img">
+        </div>
+        <nav>
+            <ul class="nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/produtos/" class="active">Produtos</a></li>
+                <li><a href="/#sobre">Sobre</a></li>
+                <li><a href="/#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- TÍTULO DA PÁGINA -->
+    <section class="page-title">
+        <div class="container">
+            <h1>Nossos Produtos</h1>
+            <p>Escolha uma categoria para ver os produtos</p>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO (sidebar + produtos) -->
+    <section class="catalogo-section">
+        <div class="container catalogo-layout">
+
+            <!-- SIDEBAR DE CATEGORIAS -->
+            <aside class="sidebar-categorias">
+                <h3><i class="fa-solid fa-layer-group"></i> Categorias</h3>
+                <button class="categoria-btn active" data-categoria="" data-nome="Todos os Produtos">
+                    Todos os produtos
+                </button>
+                <div id="listaCategorias">
+                    <!-- Categorias carregadas pelo JS (api.js) -->
+                </div>
+            </aside>
+
+            <!-- ÁREA DE PRODUTOS -->
+            <div class="produtos-area">
+                <div class="area-topo">
+                    <h2 id="tituloCategoria">Todos os Produtos</h2>
+                    <span class="contador" id="contadorProdutos"></span>
+                </div>
+                <div class="produtos-grid" id="produtosGrid">
+                    <!-- Cards carregados pelo JS (api.js) -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <img src="../img/logo.png" alt="HES Atacado" class="logo-img logo-footer">
+                </div>
+                <p class="footer-tagline">Distribuição de produtos de limpeza</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="/#sobre">Sobre Nós</a></li>
+                    <li><a href="/produtos/">Produtos</a></li>
+                    <li><a href="/#contato">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Informações</h4>
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <div class="footer-contact"><i class="fa-solid fa-phone"></i> <span>TROQUE AQUI: (81) XXXX-XXXX</span></div>
+                <div class="footer-contact"><i class="fa-solid fa-envelope"></i> <span>TROQUE AQUI: vendas@hes.com.br</span></div>
+                <div class="footer-contact"><i class="fa-solid fa-location-dot"></i> <span>Recife - PE</span></div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="ano"></span> HES Atacado. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/produtos.js"></script>
+</body>
+</html>

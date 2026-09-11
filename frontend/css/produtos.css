@@ -21,7 +21,7 @@
     --cinza: #5a6b7d;             /* textos secundários */
     --cinza-claro: #9aa4b2;       /* textos no rodapé escuro */
     --borda: #dbe4ee;             /* bordas suaves */
-    --sombra: 0 4px 20px rgba(0, 0, 0, 0.06);           /* sombra padrão dos cards */
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.06);            /* sombra padrão dos cards */
     --sombra-hover: 0 12px 32px rgba(0, 102, 204, 0.14); /* sombra ao passar o mouse */
 }
 
@@ -121,7 +121,7 @@ body {
     padding: 2.5rem 0 4.5rem;
 }
 
-/* Layout em 2 colunas: sidebar (250px) + produtos (resto)
+/* Layout em 2 colunas: sidebar (250px) + produtos (resto).
    align-items: start é ESSENCIAL para o sticky funcionar */
 .catalogo-layout {
     display: grid;
@@ -132,8 +132,7 @@ body {
 
 /* ---------- SIDEBAR DE CATEGORIAS ---------- */
 
-/* A sidebar fica presa logo abaixo do header e não sai do lugar.
-   top: 120px = altura do header (~105px) + folga */
+/* Sidebar MENOR e FIXA: fica presa abaixo do header e não se move ao rolar */
 .sidebar-categorias {
     background: var(--branco);
     border: 1px solid var(--borda);
@@ -141,12 +140,12 @@ body {
     padding: 1.5rem;
     box-shadow: var(--sombra);
 
-    position: sticky;
-    top: 120px;
-    max-height: calc(100vh - 140px);  /* nunca passa da tela */
+    position: sticky;              /* gruda na tela ao rolar a página */
+    top: 120px;                    /* altura do header (~105px) + folga */
+    max-height: 60vh;              /* ocupa no máx. 60% da tela (menor) */
     display: flex;
     flex-direction: column;
-    overflow: hidden;                 /* esconde o excesso fora da lista */
+    overflow: hidden;              /* esconde o excesso fora da lista */
 }
 
 /* O título "Categorias" fica sempre visível (não rola junto) */
@@ -163,7 +162,7 @@ body {
 
 .sidebar-categorias h3 i { color: var(--azul); }  /* ícone do título */
 
-/* Só a LISTA de categorias tem a barrinha de rolagem.
+/* Só a LISTA de categorias tem a barrinha de rolagem interna.
    min-height: 0 é ESSENCIAL para liberar o encolhimento */
 #listaCategorias {
     flex: 1 1 auto;
@@ -453,6 +452,7 @@ body {
 
     .sidebar-categorias {
         position: static;      /* sem sticky no celular */
+        top: auto;
         max-height: none;      /* altura livre */
         overflow: visible;
     }

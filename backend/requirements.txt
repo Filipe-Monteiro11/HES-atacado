@@ -6,3 +6,8 @@ psycopg2-binary==2.9.12
 python-decouple==3.8
 sqlparse==0.6.0
 tzdata==2026.3
+gunicorn
+whitenoise
+python-decouple
+psycopg2-binary
+dj-database-url

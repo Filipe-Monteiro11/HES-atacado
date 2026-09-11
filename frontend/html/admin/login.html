@@ -34,10 +34,6 @@
 
 <div id="content-main">
 
-<a href="/" class="button" style="display:block; text-align:center; margin-bottom:15px; background:#0066CC; color:#fff; text-decoration:none; padding:8px 0;">
-    ← Voltar para o site
-</a>
-
 {% if user.is_authenticated %}
 <p class="errornote">
 {% blocktranslate trimmed %}
@@ -67,6 +63,10 @@
     <input type="submit" value="{% translate 'Log in' %}">
   </div>
 </form>
+
+<div style="text-align:center; margin-top:12px;">
+  <a href="/" class="button" style="display:inline-block; padding:6px 18px; text-decoration:none;">Voltar</a>
+</div>
 
 </div>
 {% endblock %}

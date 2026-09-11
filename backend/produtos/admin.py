@@ -19,13 +19,14 @@ class SubcategoriaAdmin(admin.ModelAdmin):
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ('imagem_miniatura', 'codigo', 'nome', 'subcategoria', 'destaque', 'ativo')
-    list_filter = ('subcategoria__categoria', 'subcategoria', 'ativo', 'destaque')
+    list_display = ('codigo', 'nome', 'subcategoria', 'destaque', 'ativo')
+    list_filter = ('ativo', 'destaque')
     search_fields = ('codigo', 'nome', 'descricao')
     list_editable = ('destaque', 'ativo')
     list_select_related = ('subcategoria__categoria',)
     autocomplete_fields = ('subcategoria',)
     readonly_fields = ('imagem_preview',)
+    list_per_page = 20
 
     fieldsets = (
         ('Informações Básicas', {
@@ -39,16 +40,6 @@ class ProdutoAdmin(admin.ModelAdmin):
             'fields': ('destaque', 'ativo'),
         }),
     )
-
-    def imagem_miniatura(self, obj):
-        if obj.imagem:
-            return format_html(
-                '<img src="{}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;" />',
-                obj.imagem.url
-            )
-        return 'Sem imagem'
-
-    imagem_miniatura.short_description = 'Foto'
 
     def imagem_preview(self, obj):
         if obj.imagem:

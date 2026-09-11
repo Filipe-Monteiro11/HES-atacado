@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: hes-atacado
+    name: hesatacado
     runtime: python
     plan: free
     rootDir: backend

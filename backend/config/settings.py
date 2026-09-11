@@ -1,6 +1,6 @@
 """
 Configurações do projeto HES Atacado.
-Sistema de catálogo de produtos — Django + Supabase (PostgreSQL).
+Sistema de catálogo de produtos — Django + Supabase (PostgreSQL + Storage).
 """
 from pathlib import Path
 from decouple import config
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',          # django-storages — necessário para o Supabase Storage
     'produtos',
 ]
 
@@ -124,19 +125,58 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ============================================
-# ARQUIVOS DE MÍDIA (fotos enviadas pelo admin)
-# ============================================
-MEDIA_URL = '/media/'
+# Pasta local de mídia (usada só no modo local)
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # ============================================
-# COMPRESSÃO/ENTREGA DOS ESTÁTICOS (WhiteNoise)
-# Django 4.2+ / 5.x
+# SUPABASE STORAGE — fotos dos produtos
+# ============================================
+SUPABASE_S3_ENDPOINT = config('SUPABASE_S3_ENDPOINT', default='')
+SUPABASE_BUCKET = config('SUPABASE_BUCKET', default='produtos')
+USE_SUPABASE_STORAGE = bool(SUPABASE_S3_ENDPOINT)
+
+# Project ref do Supabase (ex: obbbzrboaegstiysddnh)
+SUPABASE_PROJECT_REF = config('SUPABASE_PROJECT_REF', default='')
+if not SUPABASE_PROJECT_REF and SUPABASE_S3_ENDPOINT:
+    # extrai o ref de: https://<ref>.storage.supabase.co/storage/v1/s3
+    SUPABASE_PROJECT_REF = SUPABASE_S3_ENDPOINT.split('//')[-1].split('.')[0]
+
+if USE_SUPABASE_STORAGE:
+    AWS_ACCESS_KEY_ID = config('SUPABASE_S3_ACCESS_KEY')
+    AWS_SECRET_ACCESS_KEY = config('SUPABASE_S3_SECRET_KEY')
+    AWS_STORAGE_BUCKET_NAME = SUPABASE_BUCKET
+
+    # Endpoint S3 — usado para ENVIAR/LER arquivos (com autenticação)
+    AWS_S3_ENDPOINT_URL = SUPABASE_S3_ENDPOINT
+    AWS_S3_REGION_NAME = config('SUPABASE_S3_REGION', default='sa-east-1')
+    AWS_S3_SIGNATURE_VERSION = 's3v4'      # exigido pelo Supabase
+    AWS_S3_ADDRESSING_STYLE = 'path'       # exigido pelo Supabase
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_QUERYSTRING_AUTH = False           # URLs limpas (sem assinatura)
+
+    # URL PÚBLICA — usada pelo NAVEGADOR para exibir a foto
+    # (note: NÃO usa o ".storage." e NÃO usa o "/s3")
+    AWS_S3_CUSTOM_DOMAIN = (
+        f'{SUPABASE_PROJECT_REF}.supabase.co'
+        f'/storage/v1/object/public/{SUPABASE_BUCKET}'
+    )
+    AWS_S3_URL_PROTOCOL = 'https:'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+else:
+    MEDIA_URL = '/media/'
+
+# ============================================
+# STORAGES — define o destino dos arquivos no Django 4.2+ / 5.x
+# Sem este bloco, o Django salva tudo local e a foto quebra no site
 # ============================================
 STORAGES = {
     'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'BACKEND': (
+            'storages.backends.s3.S3Storage'
+            if USE_SUPABASE_STORAGE
+            else 'django.core.files.storage.FileSystemStorage'
+        ),
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',

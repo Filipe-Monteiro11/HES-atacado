@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'config.middleware.AdminSessionOnlyMiddleware',   # <-- NOVA LINHA
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -168,7 +169,6 @@ else:
 
 # ============================================
 # STORAGES — define o destino dos arquivos no Django 4.2+ / 5.x
-# Sem este bloco, o Django salva tudo local e a foto quebra no site
 # ============================================
 STORAGES = {
     'default': {
@@ -199,11 +199,13 @@ CACHES = {
 }
 
 # ============================================
-# SESSÃO — login ativo por 30 dias
+# SESSÃO — login NÃO fica salvo ao fechar o navegador
+# O admin sempre pede login de novo
 # ============================================
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 dias
-SESSION_SAVE_EVERY_REQUEST = True       # renova a sessão a cada atividade
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # cookie morre quando o navegador fecha
+SESSION_COOKIE_AGE = 60 * 60 * 2         # 2h de validade máxima (fallback)
+SESSION_SAVE_EVERY_REQUEST = False       # não renova a sessão a cada clique
+SESSION_COOKIE_HTTPONLY = True           # cookie não é acessível por JavaScript
 
 # ============================================
 # SEGURANÇA EXTRA — só quando DEBUG=False (produção)

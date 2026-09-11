@@ -3,7 +3,7 @@
 // Os produtos e categorias vêm do seu painel admin.
 // =============================================
 
-const API_BASE = 'http://127.0.0.1:8000/api';
+const API_BASE = '/api';
 
 // Busca as categorias com quantidade de produtos
 async function buscarCategorias() {

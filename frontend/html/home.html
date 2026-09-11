@@ -1,21 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HES Atacado — Distribuição de Produtos de Limpeza</title>
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
 </head>
 <body>
 
     <!-- HEADER -->
     <header class="header">
-        <div class="logo" onclick="window.location.href='http://127.0.0.1:8000/admin/'" style="cursor: pointer;" title="HES Atacado">
-            <img src="../img/logo-hes.png" alt="HES Atacado" class="logo-img">
+        <div class="logo" onclick="window.location.href='/admin/'" style="cursor: pointer;" title="HES Atacado">
+            <img src="{% static 'img/logo-hes.png' %}" alt="HES Atacado" class="logo-img">
         </div>
         <nav>
             <ul class="nav">
@@ -111,7 +112,7 @@
         <div class="footer-content">
             <div>
                 <div class="footer-logo">
-                    <img src="../img/logo-hes.png" alt="HES Atacado" class="logo-img logo-footer">
+                    <img src="{% static 'img/logo-hes.png' %}" alt="HES Atacado" class="logo-img logo-footer">
                 </div>
                 <p class="footer-tagline">Distribuição de produtos de limpeza</p>
                 <div class="social-icons">
@@ -147,7 +148,7 @@
         </div>
     </footer>
 
-    <script src="../js/api.js"></script>
-    <script src="../js/home.js"></script>
+    <script src="{% static 'js/api.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

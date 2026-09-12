@@ -1,7 +1,3 @@
-// =============================================
-// HES ATACADO — Home (destaques + funções gerais)
-// =============================================
-
 document.addEventListener('DOMContentLoaded', function () {
     // Ano do rodapé
     const ano = document.getElementById('ano');

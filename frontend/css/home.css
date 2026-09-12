@@ -43,7 +43,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 .logo-img {
-    height: 72px;            /* logo maior */
+    height: 72px;
     width: auto;
     display: block;
     transition: transform 0.2s;
@@ -63,7 +63,7 @@ body {
 .nav a:hover { color: var(--azul); }
 .nav a.active { color: var(--azul); font-weight: 700; border-bottom: 2px solid var(--azul); }
 
-/* ---------- HERO (sem imagem — texto centralizado) ---------- */
+/* ---------- HERO ---------- */
 .hero {
     display: flex;
     flex-direction: column;
@@ -119,46 +119,182 @@ body {
     margin: 0.8rem auto 0;
 }
 
-/* ---------- CARROSSEL DE DESTAQUES ---------- */
-.carousel {
+/* ---------- CARROSSEL DE DESTAQUES (vitrine) ---------- */
+.destaques-wrap {
     position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 68px;
+}
+
+.destaques-viewport {
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+#produtosDestaque {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.destaque-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    padding: 2px;
+}
+
+.destaque-card {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 36px rgba(10, 20, 40, 0.09);
+}
+
+.destaque-img {
+    position: relative;
+    background: linear-gradient(140deg, #eef5ff 0%, #dce9fb 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    max-width: 520px;
-    margin: 0 auto;
+    min-height: 320px;
+    overflow: hidden;
 }
-.carousel-viewport {
-    flex: 1;
-    min-width: 0;
+
+.destaque-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-.carousel-arrow {
-    flex-shrink: 0;
-    width: 46px;
-    height: 46px;
-    border: none;
-    border-radius: 50%;
+
+.destaque-img .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: #7f96b5;
+}
+.destaque-img .placeholder i { font-size: 2.6rem; opacity: 0.5; }
+.destaque-img .placeholder span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.destaque-info {
+    padding: 2.4rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.9rem;
+    text-align: left;
+}
+
+.destaque-tag {
+    align-self: flex-start;
+    background: var(--azul-claro);
+    color: var(--azul);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destaque-nome {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--preto);
+    margin: 0;
+}
+
+.destaque-desc {
+    color: var(--cinza);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.destaque-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     background: var(--azul);
     color: var(--branco);
-    font-size: 18px;
+    padding: 0.72rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin-top: 0.3rem;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.destaque-cta:hover {
+    background: var(--azul-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+}
+
+/* Setas elegantes sobrepostas ao card */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+    background: var(--branco);
+    color: var(--azul);
+    font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, transform 0.2s;
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 6px 18px rgba(10, 20, 40, 0.12);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    z-index: 2;
 }
-.carousel-arrow:hover { background: var(--azul-hover); transform: scale(1.08); }
-.carousel-arrow:active { transform: scale(0.95); }
+.carousel-arrow:hover {
+    background: var(--azul);
+    color: var(--branco);
+    box-shadow: 0 8px 22px rgba(0, 102, 204, 0.35);
+}
+.carousel-prev { left: 0; }
+.carousel-next { right: 0; }
 
-/* O grid de destaques vira um card único centralizado */
-#produtosDestaque {
-    display: flex;
-    justify-content: center;
+/* Contador 1 / 4 */
+.destaque-counter {
+    text-align: center;
+    margin-top: 1.1rem;
+    color: var(--cinza);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.6px;
 }
 
-/* ---------- PRODUTOS (refinado) ---------- */
+.sem-produtos {
+    text-align: center;
+    color: var(--cinza);
+    padding: 28px;
+}
+
+/* ---------- PRODUTOS (grade da página de produtos) ---------- */
 .produtos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -171,9 +307,6 @@ body {
     overflow: hidden;
     box-shadow: var(--sombra);
     transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-    width: 100%;
-    max-width: 380px;
-    text-align: center;
 }
 .produto-card:hover {
     transform: translateY(-6px);
@@ -212,13 +345,7 @@ body {
 .produto-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
 .produto-info p { color: var(--cinza); font-size: 0.9rem; }
 
-.sem-produtos {
-    text-align: center;
-    color: var(--cinza);
-    padding: 20px;
-}
-
-/* ---------- CATEGORIAS (redesenhado) ---------- */
+/* ---------- CATEGORIAS ---------- */
 .categorias-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -272,7 +399,7 @@ body {
 }
 .card-categoria:hover .link-ver { opacity: 1; transform: translateY(0); }
 
-/* ---------- INFO CARDS (Sobre / Contato) ---------- */
+/* ---------- INFO CARDS ---------- */
 .info-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -358,10 +485,19 @@ body {
     .footer-content { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
 }
 
-/* Setas menores e carrossel mais compacto no celular */
-@media (max-width: 480px) {
-    .carousel { max-width: 100%; gap: 0.5rem; }
-    .carousel-arrow { width: 38px; height: 38px; font-size: 15px; }
-    .produto-card { max-width: 100%; }
-    .img-wrapper { height: 200px; }
+/* Vitrine empilhada e setas menores no celular */
+@media (max-width: 780px) {
+    .destaques-wrap { padding: 0 6px; }
+    .destaque-card { grid-template-columns: 1fr; }
+    .destaque-img { min-height: 230px; }
+    .destaque-info {
+        padding: 1.5rem 1.3rem 1.7rem;
+        text-align: center;
+        align-items: center;
+    }
+    .destaque-tag, .destaque-cta { align-self: center; }
+    .destaque-nome { font-size: 1.25rem; }
+    .carousel-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
+    .carousel-prev { left: -2px; }
+    .carousel-next { right: -2px; }
 }

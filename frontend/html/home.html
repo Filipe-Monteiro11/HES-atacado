@@ -37,7 +37,7 @@
         </div>
     </section>
 
-    <!-- PRODUTOS EM DESTAQUE -->
+    <!-- PRODUTOS EM DESTAQUE (CARROSSEL) -->
     <section class="produtos-section" id="produtos">
         <div class="container">
             <div class="section-header">
@@ -45,8 +45,18 @@
                 <p class="subtitle">Os produtos mais procurados pela nossa clientela</p>
                 <div class="line"></div>
             </div>
-            <div class="produtos-grid" id="produtosDestaque">
-                <!-- Cards carregados pelo JS (api.js) -->
+            <div class="carousel">
+                <button class="carousel-arrow carousel-prev" id="destaquePrev" aria-label="Produto anterior">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="carousel-viewport">
+                    <div class="produtos-grid" id="produtosDestaque">
+                        <!-- Card renderizado pelo JS (home.js) -->
+                    </div>
+                </div>
+                <button class="carousel-arrow carousel-next" id="destaqueNext" aria-label="Próximo produto">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>

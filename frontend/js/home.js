@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Ano do rodapé
     const ano = document.getElementById('ano');
     if (ano) ano.textContent = new Date().getFullYear();
 
@@ -18,16 +17,27 @@ document.addEventListener('DOMContentLoaded', function () {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 
-    function nomeCategoria(p) {
-        const bruto = p.categoria || p.subcategoria || p.categoria_nome || p.subcategoria_nome || '';
+    function nomeDe(p) {
+        return p.nome || p.name || p.titulo || '';
+    }
+    function imagemDe(p) {
+        return p.imagem || p.imagem_url || p.foto || p.image || null;
+    }
+    function categoriaDe(p) {
+        const bruto = p.categoria || p.subcategoria || p.categoria_nome || '';
         return String(bruto).split(/\s+[—–-]\s+/)[0].trim();
+    }
+    function ehDestaque(p) {
+        const v = p.destaque ?? p.em_destaque ?? p.is_destaque;
+        return v === true || v === 1 || v === '1' || v === 'true' || v === 'sim';
     }
 
     function renderCard(p) {
-        const nome = esc(p.nome);
-        const cat = esc(nomeCategoria(p));
-        const imagem = p.imagem
-            ? `<img src="${p.imagem}" alt="${nome}" loading="lazy">`
+        const nome = esc(nomeDe(p));
+        const cat = esc(categoriaDe(p));
+        const img = imagemDe(p);
+        const imagem = img
+            ? `<img src="${img}" alt="${nome}" loading="lazy">`
             : `<div class="placeholder"><i class="fa-regular fa-image"></i><span>Imagem em breve</span></div>`;
         return `
             <article class="feed-card">
@@ -39,13 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
             </article>`;
     }
 
-    // Atribui a posição visual de cada card com base no índice ativo
     function atualizar() {
         const cards = stage.querySelectorAll('.feed-card');
         cards.forEach((card, i) => {
             card.className = 'feed-card';
             let diff = i - ativo;
-            // normaliza para o intervalo -2..2
             if (diff < -2) diff += produtos.length;
             if (diff > 2) diff -= produtos.length;
 
@@ -67,10 +75,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function carregar() {
         try {
-            const res = await fetch('/api/produtos/');
+            // PEDE SÓ OS DESTAQUES DIRETO AO SERVIDOR
+            const res = await fetch('/api/produtos/?destaque=1');
             const data = await res.json();
             const lista = Array.isArray(data) ? data : (data.results || []);
-            produtos = lista.filter(p => p.destaque);
+            produtos = lista.filter(ehDestaque);
 
             if (!produtos.length) {
                 stage.innerHTML = '<p class="sem-produtos">Nenhum produto em destaque no momento.</p>';
@@ -87,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
     prevBtn.addEventListener('click', () => ir(-1));
     nextBtn.addEventListener('click', () => ir(1));
 
-    // Navegação pelo teclado
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') ir(-1);
         if (e.key === 'ArrowRight') ir(1);

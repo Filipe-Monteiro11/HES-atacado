@@ -37,7 +37,7 @@
         </div>
     </section>
 
-       <!-- PRODUTOS EM DESTAQUE (CARROSSEL) -->
+           <!-- PRODUTOS EM DESTAQUE (CARROSSEL FEED) -->
     <section class="produtos-section" id="produtos">
         <div class="container">
             <div class="section-header">
@@ -46,24 +46,23 @@
                 <div class="line"></div>
             </div>
 
-            <div class="destaques-wrap">
-                <button class="carousel-arrow carousel-prev" id="destaquePrev" aria-label="Produto anterior">
+            <div class="feed-carousel" id="feedCarousel">
+                <button class="feed-arrow feed-prev" id="feedPrev" aria-label="Produto anterior">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
-                <div class="destaques-viewport">
-                    <div id="produtosDestaque"></div>
+                <div class="feed-stage" id="feedStage">
+                    <!-- Cards renderizados pelo JS -->
                 </div>
 
-                <button class="carousel-arrow carousel-next" id="destaqueNext" aria-label="Próximo produto">
+                <button class="feed-arrow feed-next" id="feedNext" aria-label="Próximo produto">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
 
-            <p class="destaque-counter" id="destaqueCounter"></p>
+            <p class="feed-counter" id="feedCounter"></p>
         </div>
     </section>
-
     <!-- SOBRE -->
     <section class="info-section" id="sobre">
         <div class="container">

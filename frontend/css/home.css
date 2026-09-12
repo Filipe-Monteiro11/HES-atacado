@@ -119,139 +119,133 @@ body {
     margin: 0.8rem auto 0;
 }
 
-/* ---------- CARROSSEL DE DESTAQUES (vitrine) ---------- */
-.destaques-wrap {
+/* ===== CARROSSEL FEED (profundidade estilo Instagram) ===== */
+.feed-carousel {
     position: relative;
-    max-width: 960px;
+    max-width: 820px;
     margin: 0 auto;
-    padding: 0 68px;
+    padding: 0 70px;
 }
 
-.destaques-viewport {
+.feed-stage {
+    position: relative;
+    height: 400px;
     overflow: hidden;
     border-radius: 18px;
 }
 
-#produtosDestaque {
-    display: flex;
-    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.destaque-slide {
-    flex: 0 0 100%;
-    min-width: 100%;
-    padding: 2px;
-}
-
-.destaque-card {
-    display: grid;
-    grid-template-columns: 320px 1fr;
+/* Cada card é posicionado de forma absoluta no palco */
+.feed-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 400px;
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 14px 36px rgba(10, 20, 40, 0.09);
+    box-shadow: 0 14px 36px rgba(10, 20, 40, 0.14);
+    cursor: pointer;
+    will-change: transform, opacity, z-index;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.5s ease,
+                box-shadow 0.5s ease;
 }
 
-.destaque-img {
-    position: relative;
+.feed-card .feed-img {
+    height: 62%;
     background: linear-gradient(140deg, #eef5ff 0%, #dce9fb 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 320px;
     overflow: hidden;
 }
-
-.destaque-img img {
+.feed-card .feed-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
-
-.destaque-img .placeholder {
+.feed-card .feed-img .placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     color: #7f96b5;
 }
-.destaque-img .placeholder i { font-size: 2.6rem; opacity: 0.5; }
-.destaque-img .placeholder span {
-    font-size: 0.72rem;
+.feed-card .feed-img .placeholder i { font-size: 2.2rem; opacity: 0.5; }
+.feed-card .feed-img .placeholder span {
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.8px;
     text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
-.destaque-info {
-    padding: 2.4rem 2.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.9rem;
-    text-align: left;
+.feed-card .feed-body {
+    padding: 1rem 1.2rem;
+    text-align: center;
 }
-
-.destaque-tag {
-    align-self: flex-start;
+.feed-card .feed-tag {
+    display: inline-block;
     background: var(--azul-claro);
     color: var(--azul);
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.7px;
-    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.6px;
+    padding: 0.2rem 0.6rem;
     border-radius: 20px;
+    margin-bottom: 0.4rem;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-.destaque-nome {
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 1.2;
+.feed-card .feed-nome {
+    font-size: 1rem;
+    font-weight: 700;
     color: var(--preto);
     margin: 0;
+    line-height: 1.3;
 }
 
-.destaque-desc {
-    color: var(--cinza);
-    font-size: 0.95rem;
-    line-height: 1.55;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+/* Estados: central (ativo) e laterais (atrás) */
+.feed-card.active {
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(10, 20, 40, 0.22);
+}
+.feed-card.left-1 {
+    transform: translate(-130%, -50%) scale(0.82);
+    z-index: 6;
+    opacity: 0.75;
+}
+.feed-card.left-2 {
+    transform: translate(-205%, -50%) scale(0.62);
+    z-index: 4;
+    opacity: 0.45;
+}
+.feed-card.right-1 {
+    transform: translate(30%, -50%) scale(0.82);
+    z-index: 6;
+    opacity: 0.75;
+}
+.feed-card.right-2 {
+    transform: translate(105%, -50%) scale(0.62);
+    z-index: 4;
+    opacity: 0.45;
+}
+.feed-card.hidden {
+    transform: translate(-50%, -50%) scale(0.4);
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.destaque-cta {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--azul);
-    color: var(--branco);
-    padding: 0.72rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    margin-top: 0.3rem;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-.destaque-cta:hover {
-    background: var(--azul-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
-}
-
-/* Setas elegantes sobrepostas ao card */
-.carousel-arrow {
+/* Setas */
+.feed-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -268,18 +262,17 @@ body {
     justify-content: center;
     box-shadow: 0 6px 18px rgba(10, 20, 40, 0.12);
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    z-index: 2;
+    z-index: 20;
 }
-.carousel-arrow:hover {
+.feed-arrow:hover {
     background: var(--azul);
     color: var(--branco);
     box-shadow: 0 8px 22px rgba(0, 102, 204, 0.35);
 }
-.carousel-prev { left: 0; }
-.carousel-next { right: 0; }
+.feed-prev { left: 0; }
+.feed-next { right: 0; }
 
-/* Contador 1 / 4 */
-.destaque-counter {
+.feed-counter {
     text-align: center;
     margin-top: 1.1rem;
     color: var(--cinza);
@@ -292,6 +285,17 @@ body {
     text-align: center;
     color: var(--cinza);
     padding: 28px;
+}
+
+/* Responsivo */
+@media (max-width: 780px) {
+    .feed-carousel { padding: 0 6px; }
+    .feed-stage { height: 340px; }
+    .feed-card { width: 240px; height: 340px; }
+    .feed-card.left-1 { transform: translate(-135%, -50%) scale(0.82); }
+    .feed-card.right-1 { transform: translate(35%, -50%) scale(0.82); }
+    .feed-card.left-2, .feed-card.right-2 { display: none; }
+    .feed-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
 }
 
 /* ---------- PRODUTOS (grade da página de produtos) ---------- */

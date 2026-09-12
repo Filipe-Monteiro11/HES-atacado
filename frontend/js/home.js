@@ -7,16 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const ano = document.getElementById('ano');
     if (ano) ano.textContent = new Date().getFullYear();
 
-    // Elementos do carrossel
-    const track = document.getElementById('produtosDestaque');
-    const prevBtn = document.getElementById('destaquePrev');
-    const nextBtn = document.getElementById('destaqueNext');
-    const counter = document.getElementById('destaqueCounter');
-    if (!track) return;
+    const stage = document.getElementById('feedStage');
+    const prevBtn = document.getElementById('feedPrev');
+    const nextBtn = document.getElementById('feedNext');
+    const counter = document.getElementById('feedCounter');
+    if (!stage) return;
 
-    let slides = [];
-    let indice = 0;
-    let startX = null;
+    let produtos = [];
+    let ativo = 0;
 
     const esc = (s) => String(s == null ? '' : s)
         .replace(/&/g, '&amp;')
@@ -24,42 +22,50 @@ document.addEventListener('DOMContentLoaded', function () {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 
-    // Encurta a categoria: "Tratamento de Piso — Pluron" -> "Tratamento de Piso"
     function nomeCategoria(p) {
         const bruto = p.categoria || p.subcategoria || p.categoria_nome || p.subcategoria_nome || '';
         return String(bruto).split(/\s+[—–-]\s+/)[0].trim();
     }
 
-    function renderSlide(p) {
+    function renderCard(p) {
         const nome = esc(p.nome);
         const cat = esc(nomeCategoria(p));
         const imagem = p.imagem
             ? `<img src="${p.imagem}" alt="${nome}" loading="lazy">`
             : `<div class="placeholder"><i class="fa-regular fa-image"></i><span>Imagem em breve</span></div>`;
-        const desc = p.descricao ? `<p class="destaque-desc">${esc(p.descricao)}</p>` : '';
-
         return `
-            <div class="destaque-slide">
-                <article class="destaque-card">
-                    <div class="destaque-img">${imagem}</div>
-                    <div class="destaque-info">
-                        ${cat ? `<span class="destaque-tag">${cat}</span>` : ''}
-                        <h3 class="destaque-nome">${nome}</h3>
-                        ${desc}
-                        <a class="destaque-cta" href="/produtos/">Ver produtos <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </article>
-            </div>`;
+            <article class="feed-card">
+                <div class="feed-img">${imagem}</div>
+                <div class="feed-body">
+                    ${cat ? `<span class="feed-tag">${cat}</span>` : ''}
+                    <h3 class="feed-nome">${nome}</h3>
+                </div>
+            </article>`;
     }
 
+    // Atribui a posição visual de cada card com base no índice ativo
     function atualizar() {
-        track.style.transform = `translateX(-${indice * 100}%)`;
-        if (counter) counter.textContent = `${indice + 1} / ${slides.length}`;
+        const cards = stage.querySelectorAll('.feed-card');
+        cards.forEach((card, i) => {
+            card.className = 'feed-card';
+            let diff = i - ativo;
+            // normaliza para o intervalo -2..2
+            if (diff < -2) diff += produtos.length;
+            if (diff > 2) diff -= produtos.length;
+
+            if (diff === 0) card.classList.add('active');
+            else if (diff === -1) card.classList.add('left-1');
+            else if (diff === -2) card.classList.add('left-2');
+            else if (diff === 1) card.classList.add('right-1');
+            else if (diff === 2) card.classList.add('right-2');
+            else card.classList.add('hidden');
+        });
+        if (counter) counter.textContent = `${ativo + 1} / ${produtos.length}`;
     }
 
     function ir(delta) {
-        if (slides.length < 2) return;
-        indice = (indice + delta + slides.length) % slides.length;
+        if (produtos.length < 2) return;
+        ativo = (ativo + delta + produtos.length) % produtos.length;
         atualizar();
     }
 
@@ -67,18 +73,18 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const res = await fetch('/api/produtos/');
             const data = await res.json();
-            const produtos = Array.isArray(data) ? data : (data.results || []);
-            slides = produtos.filter(p => p.destaque);
+            const lista = Array.isArray(data) ? data : (data.results || []);
+            produtos = lista.filter(p => p.destaque);
 
-            if (!slides.length) {
-                track.innerHTML = '<p class="sem-produtos">Nenhum produto em destaque no momento.</p>';
+            if (!produtos.length) {
+                stage.innerHTML = '<p class="sem-produtos">Nenhum produto em destaque no momento.</p>';
                 if (counter) counter.textContent = '';
                 return;
             }
-            track.innerHTML = slides.map(renderSlide).join('');
+            stage.innerHTML = produtos.map(renderCard).join('');
             atualizar();
         } catch (err) {
-            track.innerHTML = '<p class="sem-produtos">Não foi possível carregar os destaques.</p>';
+            stage.innerHTML = '<p class="sem-produtos">Não foi possível carregar os destaques.</p>';
         }
     }
 
@@ -90,18 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowLeft') ir(-1);
         if (e.key === 'ArrowRight') ir(1);
     });
-
-    // Arrastar no celular
-    track.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    }, { passive: true });
-
-    track.addEventListener('touchend', (e) => {
-        if (startX === null) return;
-        const dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dx) > 40) ir(dx < 0 ? 1 : -1);
-        startX = null;
-    }, { passive: true });
 
     carregar();
 });

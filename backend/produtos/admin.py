@@ -2,6 +2,22 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Categoria, Subcategoria, Produto
 
+class CategoriaFilter(admin.SimpleListFilter):
+    """Filtro para escolher a categoria e ver todos os produtos dela."""
+    title = 'Categoria'
+    parameter_name = 'categoria'
+
+    def lookups(self, request, model_admin):
+        # Mostra só as categorias ativas (são poucas, então é leve)
+        categorias = Categoria.objects.filter(ativo=True).order_by('ordem', 'nome')
+        return [(c.id, c.nome) for c in categorias]
+
+    def queryset(self, request, queryset):
+        # Ao escolher uma categoria, retorna todos os produtos dela
+        if self.value():
+            return queryset.filter(subcategoria__categoria_id=self.value())
+        return queryset
+
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'descricao', 'ordem', 'ativo')
@@ -20,7 +36,7 @@ class SubcategoriaAdmin(admin.ModelAdmin):
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nome', 'subcategoria', 'destaque', 'ativo')
-    list_filter = ('ativo', 'destaque')
+    list_filter = (CategoriaFilter, 'ativo', 'destaque')
     search_fields = ('codigo', 'nome', 'descricao')
     list_editable = ('destaque', 'ativo')
     list_select_related = ('subcategoria__categoria',)

@@ -1,3 +1,33 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.db.models import Count, Q
+from .models import Categoria, Produto
+
+def home(request):
+    return render(request, 'home.html')
+
+def produtos(request):
+    return render(request, 'produtos.html')
+
+# =============================================
+# API para o frontend (api.js consome estes dados)
+# =============================================
+
+def api_categorias(request):
+    categorias = (
+        Categoria.objects.filter(ativo=True)
+        .annotate(
+            qtd=Count(
+                'subcategorias__produtos',
+                filter=Q(subcategorias__produtos__ativo=True),
+                distinct=True,
+            )
+        )
+        .order_by('ordem', 'nome')
+    )
+    dados = [{'id': c.id, 'nome': c.nome, 'qtd': c.qtd} for c in categorias]
+    return JsonResponse(dados, safe=False)
+
 def api_produtos(request):
     produtos = (
         Produto.objects.filter(ativo=True)
@@ -33,6 +63,6 @@ def api_produtos(request):
             'imagem': p.imagem.url if p.imagem else None,
             'categoria_id': p.subcategoria.categoria_id,
             'categoria': f"{p.subcategoria.categoria.nome} — {p.subcategoria.nome}",
-            'destaque': p.destaque,   # <-- ADICIONADO
+            'destaque': p.destaque,
         })
     return JsonResponse(dados, safe=False)

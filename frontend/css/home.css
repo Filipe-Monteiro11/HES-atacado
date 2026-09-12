@@ -287,17 +287,6 @@ body {
     padding: 28px;
 }
 
-/* Responsivo */
-@media (max-width: 780px) {
-    .feed-carousel { padding: 0 6px; }
-    .feed-stage { height: 340px; }
-    .feed-card { width: 240px; height: 340px; }
-    .feed-card.left-1 { transform: translate(-135%, -50%) scale(0.82); }
-    .feed-card.right-1 { transform: translate(35%, -50%) scale(0.82); }
-    .feed-card.left-2, .feed-card.right-2 { display: none; }
-    .feed-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
-}
-
 /* ---------- PRODUTOS (grade da página de produtos) ---------- */
 .produtos-grid {
     display: grid;
@@ -489,19 +478,13 @@ body {
     .footer-content { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
 }
 
-/* Vitrine empilhada e setas menores no celular */
+/* Carrossel feed no celular */
 @media (max-width: 780px) {
-    .destaques-wrap { padding: 0 6px; }
-    .destaque-card { grid-template-columns: 1fr; }
-    .destaque-img { min-height: 230px; }
-    .destaque-info {
-        padding: 1.5rem 1.3rem 1.7rem;
-        text-align: center;
-        align-items: center;
-    }
-    .destaque-tag, .destaque-cta { align-self: center; }
-    .destaque-nome { font-size: 1.25rem; }
-    .carousel-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
-    .carousel-prev { left: -2px; }
-    .carousel-next { right: -2px; }
+    .feed-carousel { padding: 0 6px; }
+    .feed-stage { height: 340px; }
+    .feed-card { width: 240px; height: 340px; }
+    .feed-card.left-1 { transform: translate(-135%, -50%) scale(0.82); }
+    .feed-card.right-1 { transform: translate(35%, -50%) scale(0.82); }
+    .feed-card.left-2, .feed-card.right-2 { display: none; }
+    .feed-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
 }

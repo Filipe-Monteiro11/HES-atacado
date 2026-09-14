@@ -50,8 +50,9 @@ def api_produtos(request):
     if destaque == '1':
         produtos = produtos.filter(destaque=True)
 
-    if not categoria_id and not busca and not destaque:
-        produtos = produtos[:24]
+    # CORTE REMOVIDO: antes existia "produtos = produtos[:24]" aqui,
+    # que limitava a listagem geral a 24 produtos.
+    # Agora o catálogo completo (193 produtos) é exibido em "Todos os Produtos".
 
     dados = []
     for p in produtos:

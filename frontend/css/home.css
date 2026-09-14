@@ -42,13 +42,7 @@ body {
     z-index: 100;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-.logo-img {
-    height: 72px;
-    width: auto;
-    display: block;
-    transition: transform 0.2s;
-}
-.logo:hover .logo-img { transform: scale(1.04); }
+.logo-img { height: 72px; width: auto; display: block; }
 .logo-footer { height: 56px; }
 
 .nav { display: flex; gap: 2.2rem; list-style: none; }

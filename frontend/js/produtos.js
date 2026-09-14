@@ -57,6 +57,19 @@ async function selecionarCategoria(botao) {
     }
 
     container.innerHTML = produtos.map(criarCardProduto).join('');
+
+    // No celular, rola até a área de produtos para o cliente
+    // ver os produtos da categoria escolhida sem precisar descer a página <<<
+    if (window.innerWidth <= 800) {
+        const areaProdutos = document.querySelector('.produtos-area');
+        if (areaProdutos) {
+            // Compensa a altura do header fixo (sticky)
+            const header = document.querySelector('.header');
+            const offset = header ? header.offsetHeight + 12 : 12;
+            const topo = areaProdutos.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: topo, behavior: 'smooth' });
+        }
+    }
 }
 
 // Inicia ao carregar a página

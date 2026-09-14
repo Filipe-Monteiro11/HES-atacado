@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Seed completo do catálogo HES Hygiene Solutions.
+Seed do catálogo HES Hygiene Solutions.
 
-Cria TODOS os tópicos do catálogo como Categorias e TODOS os produtos de cada
-tópico. Um mesmo produto pode aparecer em mais de um tópico (ex: PLURON 7160
-está em Desincrustantes e em Supermercados) - por isso a busca usa
-(nome + subcategoria), e não só o nome.
+Cria cada tópico do catálogo como Categoria e todos os produtos de cada tópico,
+com a descrição/área de uso de cada um. Produtos podem aparecer em mais de um
+tópico (ex: PLURON 7160 em Desincrustantes e em Lavanderia) - por isso a busca
+usa (nome + subcategoria), e nao apenas o nome.
 
 Uso:
     python manage.py seed_catalogo            # cria/atualiza sem duplicar
@@ -16,382 +16,375 @@ from django.db import transaction
 from produtos.models import Categoria, Subcategoria, Produto
 
 CATALOGO = [
-    # ================= DISPENSERS =================
-    ("Linha Gold",
-     "Linha premium de dispensers com design sofisticado, alta durabilidade, praticidade, higiene e elegância para ambientes profissionais e corporativos.",
+    # ============================================================
+    # 1. DISPENSERS — LINHA GOLD
+    # ============================================================
+    ("Dispensers — Linha Gold",
+     "Linha premium de dispensers com design sofisticado, alta durabilidade e acabamento elegante para ambientes profissionais e corporativos.",
      [
-        ("Dispenser Sabonete Espuma DSE05", "Dispenser de sabonete em espuma. Banheiros de empresas, escritórios, shoppings e ambientes corporativos."),
-        ("Dispenser Sabonete Líquido DSE10", "Dispenser de sabonete líquido. Banheiros institucionais e corporativos."),
-        ("Dispenser Papel Toalha Bobina DPB6300", "Dispenser de papel toalha bobina. Sanitários de alto fluxo: empresas, shoppings, escolas e hospitais."),
-        ("Dispenser Papel Toalha Interfolhado DPI2400", "Dispenser de papel toalha interfolhado. Banheiros de empresas, clínicas e ambientes corporativos."),
-        ("Dispenser Papel Toalha Interfolhado Mini DPIM1400", "Dispenser de papel toalha interfolhado mini. Sanitários de baixo fluxo ou espaços reduzidos."),
-        ("Dispenser Coletor de Absorvente DCA1000", "Coletor de absorventes descartáveis. Banheiros femininos de empresas, shoppings e escolas."),
-        ("Dispenser Assento Sanitário DCS1000", "Dispenser de assento sanitário descartável. Higiene extra em banheiros públicos e institucionais."),
-        ("Dispenser Guardanapeira Interfolhada DG8000", "Guardanapeira interfolhada. Cozinhas, copas, refeitórios e praças de alimentação."),
-        ("Dispenser Papel Higiênico DHI8000", "Dispenser de papel higiênico interfolhado. Banheiros institucionais e de alto tráfego."),
-        ("Dispenser Papel Higiênico Bobina DPHB8200", "Dispenser de papel higiênico bobina 8 pol. Sanitários de empresas, escolas e hospitais."),
-        ("Dispenser Papel Higiênico Bobina DPHB1620", "Dispenser de papel higiênico bobina 16 pol (duplo). Banheiros de alto fluxo e uso institucional."),
+        ("Dispenser Sabonete Espuma", "Acionamento por bomba e dosagem controlada; acabamento premium para banheiros de alto padrão."),
+        ("Dispenser Sabonete Líquido", "Alta capacidade, com válvula dosadora e design sofisticado."),
+        ("Dispenser Papel Toalha Bobina", "Sistema de corte e proteção contra umidade; indicado para alto fluxo."),
+        ("Dispenser Papel Toalha Interfolhado", "Retirada folha a folha, reduz desperdício e protege o papel."),
+        ("Dispenser Papel Toalha Interfolhado Mini", "Versão compacta, para espaços reduzidos mantendo a praticidade."),
+        ("Dispenser Coletor de Absorvente", "Tampa que isola resíduos e odores na cabine."),
+        ("Dispenser Guardanapeira Interfolhada", "Libera um guardanapo por vez."),
+        ("Dispenser Papel Higiênico", "Modelos em rolo e interfolhado, com proteção contra contaminação e reposição prática."),
      ]),
 
-    ("Linha Care",
-     "Linha Care de dispensers com design suave e funcional, oferecendo segurança, higiene e praticidade ideais para hospitais, clínicas e ambientes institucionais.",
+    # ============================================================
+    # 2. DISPENSERS — LINHA CARE
+    # ============================================================
+    ("Dispensers — Linha Care",
+     "Linha com design suave e funcional, oferecendo segurança, higiene e praticidade para hospitais, clínicas e ambientes institucionais.",
      [
-        ("Dispenser Sabonete Espuma DPH-107", "Dispenser de sabonete em espuma. Higiene segura para hospitais, clínicas e laboratórios."),
-        ("Dispenser Sabonete Líquido DPH-108", "Dispenser de sabonete líquido. Banheiros de hospitais, clínicas e ambientes de saúde."),
-        ("Dispenser Papel Toalha Bobina DPH-101", "Dispenser de papel toalha bobina. Hospitais, clínicas e ambientes institucionais."),
-        ("Dispenser Papel Toalha Interfolhado DPH-102", "Dispenser de papel toalha interfolhado. Hospitais, clínicas e instituições de saúde."),
-        ("Dispenser Papel Toalha Interfolhado Mini DPH-103", "Dispenser de papel toalha interfolhado mini. Compacto, para clínicas, consultórios e áreas de saúde."),
-        ("Dispenser Papel Higiênico DPH-104", "Dispenser de papel higiênico. Sanitários de hospitais, clínicas e instituições."),
-        ("Dispenser Papel Higiênico DPH-105", "Dispenser de papel higiênico com capacidade extra. Alto fluxo em ambientes de saúde."),
-        ("Dispenser Papel Higiênico DPH-106", "Dispenser de papel higiênico. Banheiros de hospitais e clínicas."),
-        ("Dispenser Coletor de Absorvente DPH-109", "Coletor de absorventes descartáveis. Banheiros de hospitais, clínicas e empresas."),
-        ("Dispenser Assento Sanitário DPH-110", "Dispenser de assento sanitário descartável. Higiene em sanitários de hospitais e clínicas."),
-        ("Dispenser Guardanapeira Interfolhada DPH-111", "Guardanapeira interfolhada. Refeitórios e copas de hospitais e instituições."),
+        ("Dispenser Sabonete Espuma Care", "Design suave e funcional para hospitais e clínicas."),
+        ("Dispenser Sabonete Líquido Care", "Acionamento ergonômico, voltado à higiene institucional."),
+        ("Dispenser Papel Toalha Bobina Care", "Corte facilitado e estrutura resistente."),
+        ("Dispenser Papel Toalha Interfolhado Care", "Retirada individual e higiênica."),
+        ("Dispenser Papel Toalha Interfolhado Mini Care", "Indicado para banheiros de menor circulação."),
+        ("Dispenser Papel Higiênico Rolo Care", "Tampa de proteção e encaixe seguro."),
+        ("Dispenser Coletor de Absorvente Care", "Descarte isolado, contribuindo para a higiene e o bom odor do ambiente."),
+        ("Dispenser Guardanapeira Interfolhada Care", "Liberação de uma folha por vez."),
+        ("Dispenser Papel Higiênico Linha Care", "Sistema de recarga prática e encaixe seguro."),
      ]),
 
-    ("Linha Standard",
-     "Linha Standard de dispensers: funcionalidade, durabilidade e praticidade em design versátil, proporcionando higiene, segurança e economia.",
+    # ============================================================
+    # 3. DISPENSERS — LINHA STANDART
+    # ============================================================
+    ("Dispensers — Linha Standart",
+     "Funcionalidade, durabilidade e praticidade em design versátil, proporcionando mais higiene, segurança e economia.",
      [
-        ("Dispenser Sabonete Líquido ELT-2105", "Dispenser de sabonete líquido versátil. Banheiros de empresas, comércio e estabelecimentos em geral."),
-        ("Dispenser Sabonete Espuma ELT-2106", "Dispenser de sabonete em espuma. Higiene econômica para banheiros institucionais e comerciais."),
-        ("Dispenser Papel Toalha Bobina ELT-2101", "Dispenser de papel toalha bobina. Banheiros de empresas, comércios e escolas."),
-        ("Dispenser Papel Toalha Interfolhado ELT-2102", "Dispenser de papel toalha interfolhado. Sanitários comerciais e institucionais."),
-        ("Dispenser Papel Toalha Interfolhado Mini ELT-2103", "Dispenser de papel toalha interfolhado mini. Compacto para comércios e espaços reduzidos."),
-        ("Dispenser Coletor de Absorvente ELT-2107", "Coletor de absorventes descartáveis. Banheiros femininos de empresas e comércios."),
-        ("Dispenser Assento Sanitário ELT-2108", "Dispenser de assento sanitário descartável. Banheiros públicos e comerciais."),
-        ("Dispenser Guardanapeira Interfolhada ELT-2109", "Guardanapeira para copas, cozinhas e refeitórios comerciais."),
-        ("Dispenser Papel Higiênico ELT-2104", "Dispenser de papel higiênico. Banheiros comerciais e institucionais."),
+        ("Dispenser Sabonete Líquido Standart", "Funcionalidade, durabilidade e bom custo-benefício."),
+        ("Dispenser Sabonete Espuma Standart", "Acionamento simples e manutenção fácil."),
+        ("Dispenser Papel Toalha Bobina Standart", "Estrutura versátil e resistente."),
+        ("Dispenser Papel Toalha Interfolhado Standart", "Prático e econômico."),
+        ("Dispenser Papel Toalha Interfolhado Mini Standart", "Compacto, ideal para ambientes com espaço reduzido."),
+        ("Dispenser Papel Higiênico Rolo Standart", "Instalação e reposição simples."),
+        ("Dispenser Coletor de Absorvente Standart", "Descarte higiênico em cabines sanitárias."),
+        ("Dispenser Guardanapeira Interfolhada Standart", "Operação simples, uso institucional."),
+        ("Dispenser Papel Higiênico Linha Standart", "Reposição prática para uso contínuo."),
      ]),
 
-    # ================= EQUIPAMENTOS =================
+    # ============================================================
+    # 4. EQUIPAMENTOS PROFISSIONAIS
+    # ============================================================
     ("Equipamentos Profissionais",
-     "Equipamentos desenvolvidos para alto desempenho, segurança e eficiência em ambientes industriais, comerciais e de serviços.",
+     "Equipamentos para alto desempenho, segurança e eficiência em ambientes industriais, comerciais e de serviços.",
      [
-        ("Diluidor de Produtos Químicos (Sistema Venturi)", "Sistema de diluição de produtos concentrados por Venturi, com diluições precisas via TIP. Fornecimento e instalação. Uso em cozinhas industriais, hospitais e indústrias."),
-        ("Dosador para Máquinas de Lavar Louça", "Dosador individual para higienização em máquinas de lavar louça. Cozinhas de restaurantes, hotéis e indústrias."),
-        ("Dosador para Lavanderia", "Dosador individual para processos de lavanderia profissional. Lavanderias hospitalares, industriais e de hotelaria."),
-        ("Treinamento de Utilização e Segurança", "Treinamento completo para uso correto e seguro de produtos e equipamentos de limpeza profissional."),
+        ("Diluidores", "Instalação de diluidores de produtos químicos concentrados com sistema Venturi, permitindo diluições precisas via TIP."),
+        ("Dosadores", "Dosadores individuais utilizados na higienização de máquinas de lavar louça e lavanderias."),
+        ("Treinamento", "Treinamentos completos para uso correto e seguro dos produtos e equipamentos fornecidos."),
      ]),
 
-    # ================= PAPÉIS =================
-    ("Papéis Institucionais",
-     "Linha de papéis institucionais com alta absorção, resistência e suavidade, garantindo durabilidade, higiene e conforto em cada uso.",
+    # ============================================================
+    # 5. LINHA DE PAPÉIS INSTITUCIONAIS
+    # ============================================================
+    ("Linha de Papéis Institucionais",
+     "Alta absorção, resistência e suavidade, com responsabilidade ecológica.",
      [
-        ("Toalha Papel Bobina 200M PTB8200", "Papel toalha bobina 200m (6x200m). Alta absorção e resistência para sanitários de alto fluxo."),
-        ("Toalha Papel Bobina 150M PTB8150", "Papel toalha bobina 150m (6x150m). Sanitários institucionais e comerciais."),
-        ("Papel Higiênico Bobina Folha Dupla PHBD8300", "Papel higiênico bobina folha dupla, 10cm x 300m (8 rolos/caixa). Maciez e resistência."),
-        ("Papel Higiênico Bobina Folha Simples PHB8300", "Papel higiênico bobina folha simples, 10cm x 300m. Econômico para uso institucional."),
-        ("Papel Higiênico Interfolhado Folha Dupla IHI12", "Papel higiênico interfolhado folha dupla, 20x21cm, pacote 1000 folhas. Para dispensers interfolhados."),
-        ("Papel Higiênico Interfolhado Folha Dupla PHCLFD20X10/8000", "Papel higiênico interfolhado folha dupla, 20x10cm, 8.000 folhas/caixa. Alto fluxo."),
-        ("Toalha Interfolhada 2 Dobras PTI1250", "Papel toalha interfolhado 2 dobras, 10x21cm, 8.000 folhas/caixa. Higiene sem contato."),
-        ("Toalha Interfolhada 3 Dobras PTI12400", "Papel toalha interfolhado 3 dobras, 22x23cm, 2.400/12.000 folhas. Dispensers interfolhados profissionais."),
+        ("Papel Toalha Bobina 200M", "Papel toalha em bobina de 200 m, com alta absorção e resistência; caixa com 6 unidades."),
+        ("Papel Toalha Bobina 150M", "Papel toalha em bobina de 150 m, macio e resistente; caixa com 6 unidades."),
+        ("Toalha Interfolhada 2 Dobras", "20 x 21 cm, 2 dobras, absorvente e suave; 8.000 folhas por caixa."),
+        ("Toalha Interfolhada 3 Dobras", "22 x 23 cm, 3 dobras, maior resistência; 2.400 folhas por caixa."),
+        ("Higiênico Bobina Folha Dupla", "10 cm x 300 m; macio e resistente."),
+        ("Higiênico Bobina Folha Simples", "10 cm x 300 m; econômico e resistente."),
+        ("Higiênico Interfolhado Folha Dupla", "20 x 21 cm, 1.000 folhas; suave e absorvente."),
+        ("Higiênico Interfolhado", "10 x 21 cm, 8.000 folhas; macio e econômico para alto volume."),
      ]),
 
-    # ================= HIGIENE PESSOAL =================
-    ("Higiene Pessoal",
-     "Linha completa de sabonetes líquidos, espuma, antissépticos e álcool em gel para higienização das mãos em escolas, hotéis, hospitais e indústrias.",
+    # ============================================================
+    # 6. HIGIENE PESSOAL — SABONETES E ANTISSÉPTICOS
+    # ============================================================
+    ("Higiene Pessoal e Sabonetes",
+     "Linha completa de limpeza de alta qualidade para escolas, hotéis, motéis, supermercados e espaços institucionais.",
      [
-        ("PLURON CLOREXIDINE", "Sabonete/antisséptico de mãos à base de clorexidina. Limpeza e higienização das mãos e corpo, com glicerina que evita o ressecamento da pele."),
-        ("PLURON HANDMAX ERVA DOCE", "Sabonete perfumado para aplicação por espuma e/ou spray. Limpeza das mãos em empresas, hotéis, clínicas e indústrias."),
-        ("PLURON HANDMAX BLUE", "Sabonete líquido perfume floral. Fórmula concentrada que proporciona lavagem eficiente com pequena quantidade."),
-        ("PLURON HANDFOAM", "Sabonete perfumado de aplicação por espuma. Versões Cereja e Avelã, Pêssego e Erva Doce."),
-        ("PLURON 144 A SEPT", "Sabonete com triclosan na formulação, promovendo proteção e inibição de microrganismos na pele. Limpeza e assepsia das mãos."),
-        ("PLURON 7060 M", "Sabonete para limpeza de graxas e óleos das mãos. Oficinas mecânicas e indústrias."),
-        ("PLURON FOAM HAND SEPT", "Sabonete espuma antisséptico para limpeza e assepsia das mãos. Formulação específica para dispensers de espuma; indústrias alimentícias."),
-        ("PLURON 147 AG", "Álcool gel 70% antisséptico das mãos. Pronto uso, com emoliente. Testado contra S. choleraesuis, E. coli, S. aureus e P. aeruginosa."),
-        ("PLURON 147 BG SEPT", "Álcool 70% com clorexidina para assepsia das mãos. Aplicável em saboneteiras spray."),
-        ("PLURON ÁLCOOL FOAM", "Álcool antisséptico em espuma, sem necessidade de enxágue. Com emoliente que evita o ressecamento."),
+        ("Pluron Clorexidine", "Sabonete perfumado para aplicação por espuma e/ou spray, indicado para limpeza das mãos."),
+        ("Pluron Handmax Erva Doce", "Sabonete com glicerina e alcanolamida que evita o ressecamento da pele mesmo com uso frequente."),
+        ("Pluron 7060 M", "Sabonete para limpeza de graxas e óleos das mãos em oficinas mecânicas e indústrias."),
+        ("Pluron 7230", "Limpa pisos, paredes, equipamentos e caixas plásticas em indústrias; fórmula concentrada de rápida penetração."),
+        ("Pluron Handmax Blue", "Limpeza de mãos com perfume floral; fórmula concentrada e econômica."),
+        ("Pluron 144 A Sept", "Contém triclosan, promovendo proteção e inibindo microrganismos na pele."),
+        ("Pluron Foam Hand Sept", "Limpeza e assepsia das mãos, com formulação específica para dispensers de espuma."),
+        ("Pluron Top Remove", "Remove ceras e sujidades em Paviflex, Plurigoma, Ardósia, Pedras Naturais, Granilite e Mármore (exceto madeira)."),
+        ("Pluron Handfoam", "Sabonete perfumado por espuma; versões Cereja e Avelã, Pêssego e Erva Doce."),
+        ("Pluron 147 AG", "Álcool gel 70% antisséptico das mãos, sem necessidade de enxágue."),
+        ("Pluron Álcool Foam", "Antisséptico das mãos por espuma, sem necessidade de enxágue."),
+        ("Pluron 147 BG Sept", "Álcool 70% com clorexidina para assepsia das mãos."),
      ]),
 
-    # ================= TRATAMENTO DE PISO =================
+    # ============================================================
+    # 7. TRATAMENTO DE PISO
+    # ============================================================
     ("Tratamento de Piso",
-     "Produtos para limpeza, remoção de ceras, selamento e brilho de pisos laváveis: mármore, cerâmica, porcelanato, Paviflex, granilite e outros.",
+     "Produtos para selamento, brilho e limpeza de pisos laváveis: mármore, cerâmica, porcelanato, Paviflex, granilite e outros.",
      [
-        ("PLURON 7215", "Limpeza de pisos de mármore, borracha, cerâmica e plásticos através de lavadoras automáticas."),
-        ("PLURON 7225", "Remoção de ceras de pisos porosos (exceto madeira), sujidades de terra em pisos encardidos e gorduras de superfícies, pisos e paredes."),
-        ("PLURON 7230", "Limpeza de pisos, paredes, equipamentos e caixas plásticas em indústrias. Fórmula concentrada que penetra rapidamente nas sujidades."),
-        ("PLURON TOP REMOVE", "Remoção de ceras e sujidades em Paviflex, Plurigoma, Ardósia, Pedras Naturais, Granilite e Mármore (exceto madeira)."),
-        ("PLURON SELAFIX", "Base seladora antiderrapante para área interna. Resistência ao tráfego e excelente desempenho em diversos tipos de piso."),
-        ("PLURON SELAFIX EX", "Base seladora para área interna e externa. Não inflamável, resistente ao tráfego; restaura pisos laváveis com equipamentos HS e UHS."),
-        ("PLURON MAXBRILHO AT", "Cera auto brilho e impermeabilizante para pisos laváveis. Dispensa enceradeira, é antiderrapante e resistente ao tráfego."),
-        ("PLURON TOP BRILHO", "Cera auto brilho 3x1: sela, dá brilho e protege. Polímeros de alta tecnologia com efeito antiderrapante."),
-        ("PLURON 7914", "Cera auto brilho para pisos laváveis. Dispensa enceradeira, antiderrapante e resistente ao tráfego."),
+        ("Pluron Selafix", "Base seladora para área interna; antiderrapante e não inflamável."),
+        ("Pluron Selafix EX", "Base seladora para área interna e externa; resistente ao tráfego."),
+        ("Pluron Maxbrilho AT", "Cera auto brilho e impermeabilizante para pisos laváveis; dispensa enceradeira."),
+        ("Pluron 7914", "Cera auto brilhante, antiderrapante e resistente ao tráfego."),
+        ("Pluron Top Brilho", "Cera 3x1: sela, dá brilho e protege; alta aderência e efeito antiderrapante."),
+        ("Pluron 7215", "Limpeza de pisos de mármore, borracha, cerâmica e plásticos com lavadoras automáticas."),
+        ("Pluron 7225", "Remove ceras de pisos porosos (exceto madeira) e sujidades de terras em pisos frios encardidos."),
+        ("Pluron H8 Premium", "Elimina cheiro de tabaco e atua como odorizante de ambiente."),
+        ("Pluron H3 Herbal", "Limpeza de pisos de mármore, borracha, cerâmica e plástico com mop ou lavadoras automáticas."),
+        ("Pluron H2 Premium", "Limpador de vasos sanitários; remove manchas de sais de cálcio, magnésio e ferro."),
+        ("Pluron H4 Marine", "Limpeza manual de pisos e superfícies impregnadas com gorduras ou sujidades arenosas."),
+        ("Pluron H5 Premium", "Detergente perfumado para limpeza pesada de piso e superfícies engorduradas."),
+        ("Pluron H4 Premium", "Limpeza manual de pisos e superfícies com gorduras ou sujidades arenosas."),
+        ("Pluron Multi Citronela", "Contém citronela, afastando insetos como moscas e mosquitos."),
+        ("Pluron Multi Porcelanato", "Baixa espumação, indicado para pisos de porcelanato e outros tipos."),
      ]),
 
-    # ================= LIMPADORES / ODORIZANTES =================
+    # ============================================================
+    # 8. LIMPADORES PERFUMADOS E ODORIZANTES
+    # ============================================================
     ("Limpadores Perfumados e Odorizantes",
      "Limpadores de uso geral, perfumados e odorizantes para pisos, vidros, superfícies e ambientes.",
      [
-        ("PLURON TRIOXY", "Concentrado à base de peróxido de hidrogênio e tensoativos. Limpeza geral e alvejamento de superfícies, inclusive sujidades de mofo."),
-        ("PLURON 7470", "Limpeza diária de vidros, espelhos, acrílicos, azulejos, fórmica, telefones e superfícies de plásticos, metais e courvin."),
-        ("PLURON LIMPADOR CAPIM LIMÃO", "Limpeza manual de pisos laváveis e superfícies de residências, hospitais, condomínios, shoppings e escolas. Perfume agradável."),
-        ("PLURON LIMPADOR PITANGA", "Limpeza manual de pisos e superfícies em ambientes institucionais e comerciais, com perfume agradável."),
-        ("PLURON MULTI CITRONELA", "Multiuso com citronela, afastando insetos como moscas, mosquitos e pernilongos."),
-        ("PLURON MULTI PORCELANATO", "Produto de baixa espumação para limpeza de pisos de porcelanato e outros tipos de piso."),
-        ("PLURON H8 PREMIUM", "Elimina o cheiro de tabaco e atua como odorizante de ambiente. Aplicável em clínicas e estabelecimentos comerciais."),
-        ("PLURON H3 HERBAL", "Limpeza de pisos de mármore, borracha, cerâmica e plásticos através de mop ou lavadoras automáticas."),
-        ("PLURON H4 MARINE", "Limpeza manual de pisos e superfícies impregnadas com gorduras ou sujidades de natureza arenosa."),
-        ("PLURON H5 PREMIUM", "Detergente perfumado para limpeza pesada de pisos e superfícies impregnadas com gorduras."),
-        ("PLURON H4 PREMIUM", "Limpeza manual de pisos e superfícies impregnadas com gorduras ou sujidades arenosas. Uso em hospitais, condomínios, shoppings e escolas."),
+        ("Pluron Limpador Capim Limão", "Limpeza manual de pisos laváveis e superfícies de residências, hospitais, condomínios, shoppings, escolas e hotéis."),
+        ("Pluron Limpador Pitanga", "Deixa agradável perfume no ambiente."),
+        ("Pluron Trioxy", "Concentrado à base de peróxido de hidrogênio e tensoativos; limpeza geral e alvejamento, com ação contra mofo."),
+        ("Pluron 7470", "Limpeza diária de vidros, espelhos, acrílicos, azulejos, fórmica e superfícies de plástico, metal e courvin."),
+        ("Pluron Sanit", "Linhas Eucalipto, Floral, Floral Fresh, Intense Floral, Intense Summer, Intense Marine, Lavanda, Marine, Top Floral e Top Lavanda; com ativos bactericidas contra Staphylococcus aureus e Salmonella choleraesuis, além de perfumar o ambiente."),
      ]),
 
-    # ================= DESINFETANTES =================
+    # ============================================================
+    # 9. DESINFETANTES PERFUMADOS
+    # ============================================================
     ("Desinfetantes Perfumados",
      "Desinfetantes com ação bactericida e perfume agradável para pisos e superfícies em geral.",
      [
-        ("PLURON SANIT EUCALIPTO", "Desinfetante perfumado eucalipto com ação bactericida contra Staphylococcus aureus e Salmonella choleraesuis."),
-        ("PLURON SANIT FLORAL", "Desinfetante bactericida contra S. aureus e S. choleraesuis. Pisos e superfícies em geral."),
-        ("PLURON SANIT FLORAL FRESH", "Desinfetante bactericida com perfume floral fresh."),
-        ("PLURON SANIT INTENSE FLORAL", "Desinfetante bactericida com fragrância floral intensa."),
-        ("PLURON SANIT INTENSE SUMMER", "Desinfetante perfumado com fragrância intensa. Desinfecção de pisos e superfícies."),
-        ("PLURON SANIT INTENSE MARINE", "Desinfetante perfumado com fragrância marine intensa."),
-        ("PLURON SANIT LAVANDA", "Desinfetante perfumado lavanda com ação bactericida contra S. aureus e S. choleraesuis."),
-        ("PLURON SANIT MARINE", "Desinfetante perfumado marine com ação bactericida."),
-        ("PLURON SANIT TOP FLORAL", "Desinfetante bactericida que desinfeta, limpa e odoriza o ambiente."),
-        ("PLURON SANIT TOP LAVANDA", "Desinfetante à base de quaternário de amônio, eficaz contra Coronavírus (SARS-CoV-2/COVID19, MERS e outros)."),
+        ("Pluron Sanit Top Floral / Top Lavanda", "Ação bactericida que desinfeta, limpa e odoriza; à base de quaternário de amônio, eficaz inclusive contra Coronavírus cepa MHV."),
      ]),
 
+    # ============================================================
+    # 10. DETERGENTES PERFUMADOS
+    # ============================================================
     ("Detergentes Perfumados",
-     "Detergentes perfumados para limpeza de equipamentos, superfícies, vasos sanitários e ambientes em geral.",
+     "Detergentes perfumados para limpeza de equipamentos, superfícies, pisos e ambientes.",
      [
-        ("POLLYCLEAN 10.000", "Detergente flotador para limpeza de equipamentos de cozinhas, pias, fogão, fórmicas, plásticos, banheiros, pisos, azulejos, balcões, cerâmica e mármore."),
-        ("PLURON H2 PREMIUM", "Limpador de vasos sanitários que remove manchas de sais (cálcio, magnésio e ferro), evita manchas e não possui ácido fluorídrico. Seguro para louças sanitárias."),
+        ("Pollyclean 10.000", "Detergente flotador para limpeza de equipamentos de cozinhas, pias, fogão, fôrmicas, plástico, banheiro, pisos, azulejos, balcões, cerâmica e mesas de mármore."),
+        ("Pluron Sanit Lavanda / Marine", "Detergentes/desinfetantes perfumados com ativos bactericidas."),
      ]),
 
-    # ================= DESINCRUSTANTES =================
+    # ============================================================
+    # 11. DESINCRUSTANTES E LIMPA ALUMÍNIO
+    # ============================================================
     ("Desincrustantes e Limpa Alumínio",
      "Produtos para desincrustação de gorduras carbonizadas e limpeza de utensílios de alumínio.",
      [
-        ("PLURON 7160", "Lava e desengordura pisos, fogões, exaustores, pias, azulejos, geladeiras e banheiros. Fórmula concentrada."),
-        ("PLURON 7710 AE", "Limpeza por espuma de equipamentos, pisos e superfícies impregnadas com gorduras carbonizadas e resíduos oleosos em indústrias alimentícias."),
-        ("PLURON LA 21", "Detergente de característica ácida para limpeza e brilho de utensílios de alumínio."),
-        ("PLURON 7756", "Higienização de pratos, talheres, bandejas, copos, xícaras e utensílios em máquinas de lavar de cozinhas de hotéis, hospitais, shoppings e escolas."),
-        ("PLURON VERSAT", "Limpeza de depósitos de gorduras carbonizadas em utensílios de alumínio (panelas, coifas, frigideiras, assadeiras, latões, tanques, fogões industriais, filtros de coifas e chapas). Também em banho de guarda de formas de queijo."),
+        ("Pluron 7160", "Lava e desengordura pisos, fogões, exaustores, pias, azulejos, geladeiras e banheiros."),
+        ("Pluron 7710 AE", "Limpeza por espuma de equipamentos e superfícies impregnadas com gorduras carbonizadas e resíduos oleosos."),
+        ("Pluron 236 A", "Limpeza e desincrustação de formas, latões, caixas plásticas, garrafas, louças e ordenhadeiras mecânicas."),
+        ("Pluron 7756", "Higienização de pratos, talheres, bandejas, copos e xícaras em máquinas de lavar."),
+        ("Pluron 7799 A", "Enxágue final de máquinas de lavar louças; promove secagem rápida e evita manchas."),
+        ("Pluron 7888", "Desinfetante para frutas, legumes e verduras; ampla ação biocida contra Enterococcus faecium e Escherichia coli."),
+        ("Pluron Versat", "Limpeza de gorduras carbonizadas em utensílios de alumínio (panelas, coifas, frigideiras, assadeiras)."),
+        ("Pluron LA 21", "Detergente ácido para limpeza e brilho de utensílios de alumínio."),
      ]),
 
-    # ================= COZINHA INDUSTRIAL =================
+    # ============================================================
+    # 12. COZINHA INDUSTRIAL E RESTAURANTES
+    # ============================================================
     ("Cozinha Industrial e Restaurantes",
      "Linha formulada para as demandas rigorosas de cozinhas industriais, bares, restaurantes, padarias e açougues.",
      [
-        ("PLURON TOP GRILL", "Limpeza de fornos, grelhas, chapas, frigideiras e superfícies com gordura carbonizada. Tensoativo espumante que adere à superfície."),
-        ("PLURON 236 A", "Limpeza e desincrustação de formas, latões, caixas plásticas, garrafas, louças, ordenhadeiras mecânicas e recipientes. Também para legumes, frutas e verduras."),
-        ("PLURON 7888", "Desinfetante para frutas, legumes e verduras. Ação biocida contra Enterococcus Faecium e Escherichia coli (ANVISA). Não usar em cobre e alumínio."),
-        ("PLURON 7799 A", "Enxágue final de máquinas de lavar louças: secagem rápida e eliminação de manchas."),
-        ("PLURON MAQ DUO", "Produto 2x1 para lavagem e secagem de louças em máquinas de lavar louças."),
-        ("PLURON MAQ DET", "Detergente para pratos, talheres, bandejas, copos e xícaras em máquinas de lavar. Também para caixas plásticas."),
-        ("PLURON MAQ SEC", "Enxágue final de máquinas de lavar louças para secagem rápida e eliminação de manchas."),
-        ("PLURON MAQ CLOR", "Limpeza de pratos, talheres, bandejas, copos e xícaras em máquinas de lavar. Não usar em cobre e alumínio."),
-        ("PLURON 194 A", "Lava utensílios de cozinha, pisos, paredes, latões, tanques, mesas de trabalho, caminhões-tanque e equipamentos. Elimina sujidades e gorduras."),
-        ("PLURON 194 AV", "Lava utensílios de cozinha, pisos, paredes, latões, tanques, mesas de trabalho, caminhões-tanque e equipamentos."),
-        ("PLURON 404 A", "Lava utensílios, louças, pisos, paredes, latões, tanques e equipamentos em indústrias alimentícias, farmacêuticas e cozinhas industriais."),
-        ("PLURON 406 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, louças e utensílios em indústrias alimentícias e cozinhas industriais."),
-        ("PLURON DETERGENTE NEUTRO", "Lava utensílios de cozinha, pisos, paredes, latões, tanques e equipamentos. Reduz a tensão superficial, facilitando a remoção da gordura."),
+        ("Pluron Top Grill", "Limpeza de fornos, grelhas, chapas, frigideiras e superfícies com gordura carbonizada."),
+        ("Pluron 7799 A Cozinha", "Enxágue final para secagem rápida e eliminação de manchas."),
+        ("Pluron Maq Duo", "2x1 para lavagem e secagem de louças em máquinas."),
+        ("Pluron Maq Det", "Limpeza de pratos, talheres, bandejas, copos e xícaras em máquinas de lavar."),
+        ("Pluron Maq Sec", "Enxágue final para secagem rápida e eliminação de manchas."),
+        ("Pluron Maq Clor", "Limpeza de louças e utensílios em máquinas de lavar."),
+        ("Pluron 194 A", "Detergente neutro para utensílios, pisos, paredes, latões, tanques e mesas de trabalho."),
+        ("Pluron 194 AV", "Detergente neutro para utensílios, pisos, paredes, latões, tanques e mesas de trabalho."),
+        ("Pluron 404 A", "Limpeza manual de pisos, paredes, latões, tanques, louças e utensílios em indústrias alimentícias."),
+        ("Pluron 406 A", "Limpeza manual de pisos, paredes, latões, tanques, louças e utensílios em indústrias alimentícias."),
+        ("Pluron Detergente Neutro", "Reduz a tensão superficial, facilitando a remoção de gordura."),
+        ("Pluron 7888 Em Pó", "Detergente/sanitizante em pó."),
      ]),
 
-    # ================= LATICÍNIOS =================
+    # ============================================================
+    # 13. LATICÍNIOS
+    # ============================================================
     ("Laticínios",
-     "Produtos específicos para limpeza e desinfecção de toda a cadeia do leite: ordenha, tanques de transporte, armazenamento e pasteurizadores.",
+     "Produtos específicos para limpeza e desinfecção de toda a cadeia do leite: ordenha, tanques, armazenamento e pasteurizadores.",
      [
-        ("PLURON ALCALI CLOR", "Baixa espuma. Limpeza de ordenhadeiras mecânicas, tanques de recepção, estocagem, misturadores, resfriadores, equipamentos e tubulações."),
-        ("PLURON CLORCIP", "Baixa espuma. Limpeza CIP de ordenhadeiras, pisos, paredes, equipamentos e garrafões. Também circuitos post mix, chopeiras e máquinas de lavar pratos."),
-        ("PLURON 426 A", "Uso manual e por circulação. Limpeza de pisos, paredes, latões, tanques de recepção, resfriadores, tanques de estocagem e equipamentos."),
-        ("PLURON 327 AS", "Limpeza por circulação (CIP) de tanques, equipamentos, tubulações, pasteurizadores, evaporadores, resfriadores, ordenhadeiras e garrafas de vidro."),
-        ("PLURON 327 CIP", "Limpeza por circulação de pasteurizadores, evaporadores, resfriadores, ordenhadeiras e tubulação de aço inox. Também gordura carbonizada em fornos, grelhas e fritadeiras."),
-        ("PLURON NITRIC", "Ácido de baixa espuma para limpeza por circulação de pasteurizadores, evaporadores e ordenhadeiras. Remove resíduos minerais, pedras de leite e calcificações."),
-        ("PLURON 320 A", "Limpeza ácida de tanques de fermentação e maturação de cerveja, tubulações, pasteurizadores e ganchos. Também fosfatização de superfícies metálicas."),
-        ("PLURON 418 A", "Limpeza por espuma de superfícies impregnadas com gorduras e resíduos de óleos em indústrias alimentícias e de bebidas."),
-        ("PLURON 446 A", "Limpeza de pisos, azulejos de cozinhas e equipamentos em geral. Não causa corrosão em plásticos, alumínio, cobre e metais galvanizados."),
-        ("PLURON 489 AT5", "Limpeza manual ou por espuma de equipamentos, pisos, paredes e superfícies com gorduras e resíduos oleosos."),
-        ("PLURON 428 A4", "Limpeza por espuma de superfícies impregnadas com gorduras e resíduos oleosos em indústrias alimentícias, cozinhas, restaurantes e hospitais."),
-        ("PLURON 447 AE", "Limpeza por espuma e manual de superfícies com gorduras, proteínas e resíduos de óleos. Também pisos, paredes, latões, tanques, equipamentos e banheiros."),
-        ("PLURON 489 A", "Limpeza manual ou por espuma de equipamentos, pisos, paredes e superfícies impregnadas com gorduras e resíduos oleosos."),
-        ("PLURON 490 A", "Remoção de sujidades inorgânicas em ambientes exclusivamente industriais. Indústrias de alimentos, frigoríficos, farmacêuticas e bebidas."),
-        ("PLURON 490 AM", "Remoção de sujidades inorgânicas em ambientes exclusivamente industriais."),
-        ("PLURON ACID FOAM", "Detergente ácido para limpeza externa em indústrias alimentícias, farmacêuticas e cosméticos. Remove pedra cervejeira e pedra de leite. Enchedoras e esteiras."),
-        ("PLURON 786 B5", "Aditivo para soluções cáusticas na lavagem de garrafas e nos sistemas CIP. Reduz a frequência da limpeza ácida."),
-        ("PLURON CE 800 B", "Aditivo na lavagem de garrafas e máquinas em geral. Também utilizado como antiespumante."),
-        ("PLURON 950 PACK", "Limpa e lubrifica esteiras e correntes de transporte de embalagens cartonadas."),
-        ("PLURON 461 A1", "Desinfecção de equipamentos, ordenhadeiras, tanques de estocagem, válvulas, tubulações, pisos e paredes. Baixa formação de espuma."),
-        ("PLURON 463 AP", "Desinfecção de superfícies, tanques de estocagem, válvulas, tubulações, pisos e paredes em indústrias alimentícias e em geral."),
-        ("PLURON 444 A", "Desinfecção manual por imersão ou circulação de equipamentos, tanques, válvulas, tubulações, pisos e paredes. Também cloração de água e hortifrutícolas."),
-        ("PLURON HIDROXYSEPT", "Desinfecção de equipamentos, tanques de estocagem, válvulas, tubulações, pisos e paredes em indústrias de alimentos."),
-        ("PLURON 464 A", "Desinfecção de instalações, equipamentos, superfícies, pisos e utensílios. Elimina odores e age contra bactérias, bolores e leveduras."),
-        ("PLURON TS 787 B", "Limpeza por circulação nas linhas de troca de sabores e nos circuitos de post-mix nas indústrias de bebidas. Tensoativo de baixa espuma."),
-        ("PLURON 484 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos e caminhões-tanque em indústrias alimentícias e farmacêuticas."),
-        ("PLURON 485 A", "Lava utensílios, pisos, paredes, latões, tanques, equipamentos, botas e luvas."),
-        ("PLURON 485 A SE", "Lava utensílios, pisos, latões, tanques, equipamentos e utensílios em indústrias farmacêuticas e em geral."),
-        ("PLURON 485 AE", "Limpeza de pisos, paredes, caminhões-tanque, equipamentos, luvas e botas em indústrias alimentícias, farmacêuticas, hospitais, escolas e clínicas."),
+        ("Pluron Alcali Clor", "Baixa espuma para limpeza CIP de ordenhadeiras, tanques, misturadores, resfriadores e tubulações; também para post-mix e chopeiras."),
+        ("Pluron Clorcip", "Baixa espuma para limpeza CIP de ordenhadeiras, pisos, paredes, equipamentos e garrafões em indústrias de águas minerais."),
+        ("Pluron 236 A Laticínios", "Limpeza e desincrustação de formas, latões, caixas plásticas, garrafas e ordenhadeiras."),
+        ("Pluron 426 A", "Uso manual e por circulação para pisos, paredes, latões, tanques de recepção, resfriadores e equipamentos."),
+        ("Pluron 327 AS", "Limpeza por circulação (CIP) de tanques, equipamentos e tubulações."),
+        ("Pluron 327 CIP", "Limpeza por circulação (CIP) de tanques, equipamentos e tubulações."),
+        ("Pluron 337 AB", "Limpeza de ganchos, carretilhas, garrafas e circulação de pasteurizadores, evaporadores e resfriadores."),
+        ("Pluron Detaclor Laticínios", "Limpeza manual ou por espuma de equipamentos com gorduras e resíduos oleosos."),
+        ("Pluron Clorofoam AL", "Limpeza por espuma de superfícies com gorduras e resíduos oleosos."),
+        ("Pluron 489 AT5", "Limpeza manual ou por espuma de equipamentos e superfícies engorduradas."),
+        ("Pluron 428 A4", "Limpeza manual ou por espuma de equipamentos e superfícies engorduradas."),
+        ("Pluron Nitric", "Ácido de baixa espuma para circulação de pasteurizadores, concentradores, evaporadores e desincrustação de gordura carbonizada."),
+        ("Pluron 320 A", "Limpeza ácida de tanques de fermentação e maturação de cerveja, tubulações e pasteurizadores."),
+        ("Pluron TS 787 B", "Limpeza por circulação nas linhas de troca de sabores e circuitos post-mix."),
+        ("Pluron 418 A", "Limpeza por espuma de superfícies com gorduras e resíduos de óleos."),
+        ("Pluron 446 A", "Limpeza de pisos, azulejos de cozinhas e equipamentos em geral."),
+        ("Pluron 950 Pack", "Limpa e lubrifica esteiras e correntes de transporte de embalagens cartonadas."),
+        ("Pluron 447 AE", "Detergente/desincrustante ácido para gorduras, proteínas e sujidades inorgânicas."),
+        ("Pluron 489 A", "Detergente/desincrustante ácido para gorduras, proteínas e sujidades inorgânicas."),
+        ("Pluron 490 A", "Detergente/desincrustante ácido para gorduras, proteínas e sujidades inorgânicas."),
+        ("Pluron 490 AM", "Detergente/desincrustante ácido para gorduras, proteínas e sujidades inorgânicas."),
+        ("Pluron Acid Foam", "Detergente ácido para limpeza externa; remove Pedra Cervejeira (Oxalato de Cálcio) e Pedra de Leite (Fosfato Tricálcico)."),
+        ("Pluron 786 B5", "Aditivo para soluções cáusticas e ácidas em CIP e lavagem de garrafas; antiespumante."),
+        ("Pluron CE 800 B", "Aditivo para soluções cáusticas e ácidas em CIP e lavagem de garrafas; antiespumante."),
+        ("Pluron 461 A1", "Desinfetante para equipamentos, tanques, válvulas, tubulações, pisos e paredes em indústrias de alimentos."),
+        ("Pluron 463 AP", "Desinfetante para equipamentos, tanques, válvulas, tubulações, pisos e paredes em indústrias de alimentos."),
+        ("Pluron Hidroxysept", "Desinfetante para equipamentos, tanques, válvulas, tubulações, pisos e paredes em indústrias de alimentos."),
      ]),
 
-    # ================= CARRETILHAS =================
-    ("Tratamento de Carretilhas, Trilhos e Nóreas",
-     "Produtos para limpeza e proteção de ganchos, carretilhas, trilhos e nóreas de ferro e aço.",
-     [
-        ("PLURON 199 A1", "Utilizado por imersão para proteção de ganchos e carretilhas de ferro e aço contra oxidação. Também fosfatização de superfícies metálicas."),
-        ("PLURON 199 A2", "Limpeza e proteção por imersão de ganchos e carretilhas de ferro ou aço contra oxidação."),
-        ("PLURON 337 AB", "Limpeza de ganchos, carretilhas e garrafas e limpeza por circulação de pasteurizadores, evaporadores, resfriadores e tubulação de aço inox."),
-        ("PLURON 488 A", "Limpeza por imersão de cozinhadores contínuos ou estáticos, ganchos e carretilhas. Remove gorduras carbonizadas e incrustações da água."),
-     ]),
-
-    # ================= FRIGORÍFICOS =================
+    # ============================================================
+    # 14. FRIGORÍFICOS E ABATEDOUROS
+    # ============================================================
     ("Frigoríficos e Abatedouros",
      "Linha desenvolvida para atender às normas de higiene dos Ministérios da Saúde e da Agricultura em frigoríficos e abatedouros.",
      [
-        ("PLURON CLOROFOAM AL", "Limpeza por espuma de superfícies impregnadas com gorduras e resíduos oleosos. Possui cloro que auxilia na limpeza e sanitização."),
-        ("PLURON DETACLOR", "Limpeza manual ou por espuma de equipamentos, pisos, paredes e superfícies com gorduras e resíduos oleosos. Cloro auxilia na sanitização."),
-        ("PLURON 485 A", "Lava utensílios, pisos, paredes, latões, tanques, equipamentos, botas e luvas em indústrias alimentícias e frigoríficos."),
-        ("PLURON 485 A SE", "Lava utensílios, pisos, latões, tanques e equipamentos. Uso em frigoríficos e indústrias farmacêuticas."),
-        ("PLURON 485 AE", "Limpeza de pisos, paredes, caminhões-tanque, equipamentos, luvas e botas em frigoríficos e indústrias em geral."),
-        ("PLURON 484 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos e caminhões-tanque em frigoríficos e indústrias."),
-        ("PLURON 404 A", "Lava utensílios, louças, pisos, paredes, latões, tanques e equipamentos. Indicado em frigoríficos e indústrias alimentícias."),
-        ("PLURON 406 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, louças e utensílios em frigoríficos e indústrias."),
-        ("PLURON 7230", "Limpeza de pisos, paredes, equipamentos e caixas plásticas em frigoríficos e indústrias em geral."),
-        ("PLURON 327 AS", "Limpeza por circulação (CIP) de tanques, equipamentos, tubulações, pasteurizadores e ordenhadeiras em frigoríficos."),
-        ("PLURON 320 A", "Limpeza ácida de tanques, tubulações e ganchos; também fosfatização de superfícies metálicas em frigoríficos."),
-        ("PLURON 327 CIP", "Limpeza por circulação em frigoríficos e indústrias de alimentos; tubulação de aço inox."),
-        ("PLURON 194 A", "Lava utensílios, pisos, paredes, latões, tanques, mesas de trabalho e equipamentos em frigoríficos."),
-        ("PLURON 194 AV", "Lava utensílios, pisos, paredes, latões, tanques, mesas de trabalho e equipamentos em frigoríficos."),
+        ("Pluron 199 A1", "Imersão para proteção de ganchos e carretilhas de ferro/aço contra oxidação; fosfatização de superfícies metálicas."),
+        ("Pluron 199 A2", "Imersão para proteção de ganchos e carretilhas de ferro/aço contra oxidação; fosfatização de superfícies metálicas."),
+        ("Pluron 488 A", "Limpeza por imersão de cozinhadores contínuos/estáticos, ganchos e carretilhas."),
+        ("Pluron 484 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, botas, luvas e utensílios em indústrias alimentícias e farmacêuticas."),
+        ("Pluron 485 A", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, botas, luvas e utensílios em indústrias alimentícias e farmacêuticas."),
+        ("Pluron 485 A SE", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, botas, luvas e utensílios em indústrias alimentícias e farmacêuticas."),
+        ("Pluron 485 AE", "Limpeza manual de pisos, paredes, latões, tanques, equipamentos, botas, luvas e utensílios em indústrias alimentícias e farmacêuticas."),
+        ("Pluron Álcool Sept 15%", "Limpeza e desinfecção em única etapa de superfícies onde não se pode fazer enxágue."),
      ]),
 
-    # ================= SUPERMERCADOS =================
-    ("Supermercados",
-     "Produtos para limpeza e desinfecção de supermercados, padarias, açougues e áreas de manipulação de alimentos.",
-     [
-        ("PLURON 7160", "Lava e desengordura pisos, fogões, exaustores, pias, azulejos e banheiros em supermercados e comércios."),
-        ("PLURON TOP GRILL", "Limpeza de fornos, grelhas, chapas e frigideiras com gordura carbonizada em padarias, açougues e restaurantes."),
-        ("PLURON DET CLEAN", "Lava utensílios, pisos, paredes, latões, tanques, mesas de trabalho, equipamentos, luvas e botas. Limpeza pesada de supermercados."),
-        ("PLURON DETACLOR", "Limpeza manual ou por espuma de equipamentos, pisos, paredes e superfícies. Cloro auxilia na limpeza e sanitização."),
-        ("PLURON 144 A SEPT", "Sabonete com triclosan, proteção e inibição de microrganismos na pele. Higiene das mãos em supermercados e comércios."),
-        ("PLURON 444 A", "Desinfecção manual por imersão ou circulação de equipamentos, pisos e paredes. Também cloração de água e hortifrutícolas."),
-        ("PLURON 464 A", "Desinfecção de instalações, equipamentos, superfícies, pisos e utensílios. Elimina odores desagradáveis."),
-     ]),
-
-    # ================= LAVANDERIA =================
+    # ============================================================
+    # 15. LAVANDERIA
+    # ============================================================
     ("Lavanderia",
      "Produtos líquidos ou em pó para limpeza e desinfecção de roupas em lavanderias profissionais, hospitalares, industriais e de hotelaria.",
      [
-        ("PLURON SOFT PREMIUM", "Amaciante com tecnologia em cápsulas: mantém os tecidos perfumados e macios por muito mais tempo."),
-        ("PLURON SOFT INTENSE", "Amaciante perfumado para todos os tipos de tecidos em lavanderias hospitalares, comerciais, industriais e de hotelaria."),
-        ("PLURON 909 LC", "Amaciante com toque suave no perfume, para todos os tipos de tecidos em lavanderias profissionais."),
-        ("PLURON 835 LL", "Produto 2 em 1: amacia e acidula roupas de todos os tipos de tecidos."),
-        ("PLURON PASSE PRONTO", "Para todos os tipos de roupas, oferecendo rapidez e qualidade ao passar e deixando perfume agradável."),
-        ("PLURON 836 LL", "Alveja e desinfeta roupas brancas e de cores firmes de algodão e algodão/poliéster. Não causa manchas em presença de clorexidina."),
-        ("PLURON 920 LL4", "Assepsia, remoção de manchas e alvejamento de roupas de algodão/poliéster brancas ou coloridas."),
-        ("PLURON 960 L", "Alvejante em pó que remove manchas de sangue, frutas, molhos, bebidas e remédios. Não revela manchas de clorexidina."),
-        ("PLURON MAXCLOR", "Alveja e desinfeta roupas de algodão e algodão/poliéster. Ação biocida contra S. aureus, Salmonella choleraesuis e Pseudomonas aeruginosa."),
-        ("PLURON 985 L", "Acidulante e anticloro na lavagem de roupas brancas ou coloridas. Aumenta a vida útil das peças e diminui irritações na pele."),
-        ("PLURON 834 LL", "Lavagem de roupas industriais e hospitalares. Branqueador óptico que deixa as roupas mais brancas."),
-        ("PLURON 888 LLO", "Remoção de gorduras, sangue e medicamentos em roupas de algodão e poliéster/algodão. Branqueador óptico realça o brilho."),
-        ("PLURON MAX DETERGENTE EM PÓ", "Detergente para roupas de cama, banho e uso pessoal. Eficiente em roupas hospitalares, de hotéis e lavanderias profissionais."),
-        ("PLURON CIP LAVANDERIA", "Aditivo alcalino em processos de lavagem de roupas brancas ou coloridas com sujidade média ou pesada. Não agride cores e fibras."),
-        ("PLURON 961 L", "Umectação e lavagem de roupas. Pode ser utilizado com um detergente alcalino."),
-        ("PLURON 962 L", "Umectação e lavagem de roupas. Apropriado para tecidos delicados como seda, lã, nylon e cobertores."),
-        ("PLURON 949 L", "Acidulante e anticloro na lavagem de roupas brancas ou coloridas."),
-        ("PLURON INIBY LAV", "Neutraliza resíduos de detergentes clorados (clorexidina) e remove manchas de protetores solares, bronzeadores e lubrificantes."),
-        ("PLURON CLOTH WASH WHITE", "Lava roupas líquido sem perfume e sem corante, com alto teor de branqueador óptico. Roupas brancas e coloridas."),
-        ("PLURON CLOTH WASH", "Lava roupas líquido perfumado para roupas de cama, banho e uso pessoal. Todos os tipos de tecido."),
-        ("PLURON LAVA ROUPAS", "Detergente para todos os tipos de roupas. Alcanolamida de coco evita o ressecamento da pele. Não agride fibras e cores."),
-        ("PLURON DETACID L", "Tratamento de roupas manchadas de gorduras, óleos, graxas e batom/maquiagem."),
-        ("PLURON LAV SOLV", "Remoção de manchas de gorduras, óleos, molhos e batom. Tensoativo de baixa formação de espuma."),
-        ("PLURON LAV CLEAN", "Lava roupas líquido sem perfume e sem corante, para roupas de cama, banho e uso pessoal."),
-        ("PLURON 833 LL", "Contém sequestrantes e dispersantes que evitam o amarelamento da roupa por sais de cálcio e ferro."),
-        ("PLURON ALCALAV", "Branqueador óptico que deixa as roupas mais brancas e tensoativos biodegradáveis de baixa espuma."),
-        ("PLURON 911 LLX", "Usado associado a detergente neutro na lavagem de roupas brancas ou coloridas com sujidade média ou pesada."),
-        ("PLURON 837 LL3", "Anticloro e acidulante na lavagem de roupas brancas ou coloridas. Reduz enxágues, tempo e consumo de água. Elimina traças."),
-        ("PLURON 847 LLF", "Acidulante e removedor de ferrugem em roupas brancas ou coloridas. Não aplicar em superfícies não resistentes a ácidos."),
-        ("PLURON 964 L", "Pré-lavagem e lavagem de roupas com sujidade pesada em lavanderias industriais. Pode ser usado em materiais sintéticos."),
+        ("Pluron 7160 Lavanderia", "Lava e desengordura pisos, fogões e exaustores."),
+        ("Pluron Top Grill Lavanderia", "Limpeza de fornos, grelhas, chapas e frigideiras."),
+        ("Pluron Det Clean", "Lava utensílios, pisos, paredes, latões, tanques, equipamentos, luvas e botas."),
+        ("Pluron Detaclor Lavanderia", "Limpeza manual/por espuma de equipamentos e superfícies engorduradas."),
+        ("Pluron Soft Premium", "Amaciante com tecnologia em cápsulas que mantém tecidos perfumados e macios por mais tempo."),
+        ("Pluron Soft Intense", "Amaciante perfumado para todos os tecidos em lavanderias."),
+        ("Pluron 909 LC", "Amaciante com toque suave, para todos os tipos de tecidos."),
+        ("Pluron 835 LL", "2 em 1: amacia e acidula roupas de todos os tipos de tecidos."),
+        ("Pluron 144 A Sept Lavanderia", "Desinfecção manual/por imersão de equipamentos, pisos e paredes; cloração de água."),
+        ("Pluron 444 A", "Desinfecção manual/por imersão de equipamentos, pisos e paredes; cloração de água."),
+        ("Pluron 464 A", "Desinfecção manual/por imersão de equipamentos, pisos e paredes; cloração de água."),
+        ("Pluron Passe Pronto", "Oferece rapidez e qualidade na hora de passar; deixa agradável perfume."),
+        ("Pluron 836 LL", "Alveja e desinfeta roupas brancas e de cores firmes."),
+        ("Pluron 461 A", "Alveja e desinfeta roupas brancas e de cores firmes."),
+        ("Pluron 920 LL4", "Assepsia, remoção de manchas e alvejamento de roupas."),
+        ("Pluron 960 L", "Assepsia, remoção de manchas e alvejamento de roupas."),
+        ("Pluron Maxclor", "Alveja/desinfeta roupas; acidulante e anticloro."),
+        ("Pluron 985 L", "Alveja/desinfeta roupas; acidulante e anticloro."),
+        ("Pluron 834 LL", "Detergente para lavagem de roupas industriais, hospitalares e de algodão/poliéster."),
+        ("Pluron 888 LLO", "Detergente para lavagem de roupas industriais, hospitalares e de algodão/poliéster."),
+        ("Pluron Max Detergente em Pó", "Lavagem de roupas de cama, banho e uso pessoal; aditivo alcalino."),
+        ("Pluron CIP Lavanderia", "Lavagem de roupas de cama, banho e uso pessoal; aditivo alcalino."),
+        ("Pluron 961 L", "Detergente, umectante, acidulante e anticloro para lavagem de roupas."),
+        ("Pluron 962 L", "Detergente, umectante, acidulante e anticloro para lavagem de roupas."),
+        ("Pluron 949 L", "Detergente, umectante, acidulante e anticloro para lavagem de roupas."),
+        ("Pluron Iniby Lav", "Detergente, umectante, acidulante e anticloro para lavagem de roupas."),
+        ("Pluron Cloth Wash White", "Lava roupas líquido (sem perfume/corante ou perfumado) para roupas de cama, banho e uso pessoal."),
+        ("Pluron Cloth Wash", "Lava roupas líquido (sem perfume/corante ou perfumado) para roupas de cama, banho e uso pessoal."),
+        ("Pluron Lava Roupas", "Lavagem e tratamento de manchas de gorduras, óleos, graxas, molhos e batom."),
+        ("Pluron Detacid L", "Lavagem e tratamento de manchas de gorduras, óleos, graxas, molhos e batom."),
+        ("Pluron Lav Solv", "Lavagem e tratamento de manchas de gorduras, óleos, graxas, molhos e batom."),
+        ("Pluron Lav Clean", "Lavagem e tratamento de manchas de gorduras, óleos, graxas, molhos e batom."),
+        ("Pluron 833 LL", "Com sequestrantes e dispersantes, evita amarelamento por sais de cálcio e ferro."),
+        ("Pluron Alcalav", "Com sequestrantes e dispersantes, evita amarelamento por sais de cálcio e ferro."),
+        ("Pluron 911 LLX", "Acidulante, anticloro e removedor de ferrugem; pré-lavagem de sujidade pesada."),
+        ("Pluron 837 LL3", "Acidulante, anticloro e removedor de ferrugem; pré-lavagem de sujidade pesada."),
+        ("Pluron 847 LLF", "Acidulante, anticloro e removedor de ferrugem; pré-lavagem de sujidade pesada."),
+        ("Pluron 964 L", "Acidulante, anticloro e removedor de ferrugem; pré-lavagem de sujidade pesada."),
      ]),
 
-    # ================= FARMACÊUTICA / HOSPITALAR =================
+    # ============================================================
+    # 16. FARMACÊUTICA E HOSPITALAR
+    # ============================================================
     ("Farmacêutica e Hospitalar",
      "Linha completa para o setor farmacêutico e hospitalar, em conformidade com as normas do Ministério da Saúde e ANVISA.",
      [
-        ("PLURON 147 BG SEPT SAÚDE", "Álcool 70% com clorexidina, pronto uso, antisséptico das mãos. Testado contra S. aureus, S. choleraesuis, P. aeruginosa e E. coli (laudo ANVISA)."),
-        ("PLURON ÁLCOOL FOAM SAÚDE", "Álcool antisséptico em espuma, pronto uso, sem enxágue. Testado contra S. choleraesuis, E. coli, S. aureus e P. aeruginosa."),
-        ("PLURON 147 AG SAÚDE", "Álcool em gel 70% antisséptico das mãos à base de álcool etílico. Amplo espectro testado em laboratório credenciado pela ANVISA."),
-        ("PLURON QUATER LH", "Desinfetante à base de quaternário de amônio de 5ª geração e biguanida. Superfícies fixas e artigos não críticos em hospitais. Eficaz contra KPC, C. Albicans, Acinetobacter e Coronavírus."),
+        ("Pluron 147 BG Sept Saúde", "Álcool 70% com clorexidina, pronto uso, antisséptico das mãos com emoliente."),
+        ("Pluron Álcool Foam Saúde", "Antisséptico por espuma, sem necessidade de enxágue."),
+        ("Pluron 147 AG Saúde", "Álcool gel 70% antisséptico das mãos."),
+        ("Samprox 3,5%", "Esterilização de dialisadores, linhas de hemodiálise e desinfecção de alto nível de máquinas de hemodiálise."),
+        ("Samprox 5%", "Esterilização de dialisadores, linhas de hemodiálise e desinfecção de alto nível de máquinas de hemodiálise."),
+        ("Pluron Quater LH", "Desinfetante à base de Quaternário de 5ª geração e Biguanida para superfícies fixas e artigos não críticos; ação virucida testada pela UNICAMP."),
      ]),
 
-    ("Hemodiálise",
-     "Produtos para esterilização e desinfecção de alto nível de máquinas, dialisadores e linhas de hemodiálise.",
-     [
-        ("SAMPROX 3,5%", "Ácido peracético para esterilização de dialisadores, linhas de hemodiálise e desinfecção de alto nível de máquinas. Embalagem 5L com proteção UV. Proibido uso por imersão."),
-        ("SAMPROX 5%", "Esterilização de dialisadores e linhas de hemodiálise e desinfecção de alto nível das máquinas. Laudos ANVISA de eficácia e segurança."),
-     ]),
-
-    # ================= AUTOMOTIVA =================
+    # ============================================================
+    # 17. AUTOMOTIVA
+    # ============================================================
     ("Automotiva",
-     "Linha automotiva: limpeza de chassis, carrocerias, motores e rodas até conservação geral de veículos. Ideal para transportadoras, postos, lava-jatos e empresas de ônibus.",
+     "Linha automotiva: limpeza de chassis, carrocerias, motores e rodas até conservação geral de veículos.",
      [
-        ("SOLUMOL 960 R", "Detergente para embelezamento automotivo. Realça o brilho da pintura na primeira lavagem."),
-        ("SUPERMIX CR", "Lavagem manual ou automática de veículos e equipamentos com superfícies pintadas."),
-        ("MUSTANG AZULÃO", "Limpeza super pesada para carrocerias de madeira, alumínio, chassis, motores e sujidades intensas."),
-        ("POLLYCLEAN E", "Limpeza de chassis, motores, rodas, caminhões com carrocerias de madeira, baú e tanques pintados."),
-        ("SUPREMIX AT", "Limpeza de pisos, equipamentos de inox e alumínio, pátios de manobra e frotas de veículos."),
-        ("MUSTANG SOLUMAX DR 8", "Detergente desengraxante concentrado. Elimina sujeiras pesadas: graxas, óleos e resíduos betuminosos. Também chassis, motores, rodas e baús."),
-        ("PLURON 7060 M", "Limpeza de graxas e óleos das mãos em oficinas mecânicas e indústrias."),
-        ("PLURON 7225", "Eficiente na limpeza de chassis, motores, rodas e caminhões com carrocerias de madeira, baú e tanques pintados."),
+        ("Mustang Silicone Gel", "Renova e revitaliza superfícies de borracha, vinil e plásticos do veículo."),
+        ("Mustang Prima", "Renova superfícies emborrachadas como pneus e tapetes; aparência de novo."),
+        ("Pluron 7060 M Automotiva", "Sabonete para limpeza de graxas e óleos das mãos em oficinas."),
+        ("Solumol 960 R", "Detergente para embelezamento automotivo; realça o brilho da pintura."),
+        ("Supermix CR", "Lavagem manual ou automática de veículos e equipamentos com superfícies pintadas."),
+        ("Mustang Azulão", "Limpeza super pesada para carrocerias de madeira, alumínio, chassis e motores."),
+        ("Pollyclean E", "Limpeza de chassis, motores, rodas, caminhões com carroceria de madeira, baú e tanques pintados."),
+        ("Supremix AT", "Limpeza de pisos, equipamentos de inox e alumínio, pátios de manobra e frotas."),
+        ("Mustang Solumax DR 8", "Detergente desengraxante concentrado para limpeza impecável; remove graxas e resíduos betuminosos."),
+        ("Pluron 7225 Automotiva", "Limpeza de chassis, motores, rodas e caminhões."),
      ]),
 
-    ("Recuperadores de Superfícies",
-     "Produtos para renovar e revitalizar superfícies de borracha, vinil e plásticos de veículos.",
-     [
-        ("MUSTANG SILICONE GEL", "Renova e revitaliza superfícies de borracha, vinil e plásticos do veículo. Restaura o brilho original protegendo contra sol e tempo."),
-        ("MUSTANG PRIMA", "Renova superfícies emborrachadas como pneus e tapetes de veículos. Aplicação fácil, com aparência de pneus novos."),
-     ]),
-
-    # ================= ACESSÓRIOS =================
+    # ============================================================
+    # 18. ACESSÓRIOS DE LIMPEZA
+    # ============================================================
     ("Acessórios de Limpeza",
-     "Acessórios profissionais para rotinas de limpeza: panos, baldes, lixeiras, rodos, mops, pulverizadores, sinalização e kits.",
+     "Materiais operacionais em Polipropileno, alumínio, microfibra e aço para rotinas profissionais.",
      [
-        ("Espátula", "Limpador para box, janelas, frestas e fendas. Cabo anatômico, super resistente. Acompanha 2 refis de microfibra. Polipropileno."),
-        ("Pá Coletora", "Pá coletora com tampa e cabo de alumínio. Trava na tampa mantendo-a aberta para descarte seguro. Polipropileno e microfibra, 600g."),
-        ("Limpa Vidros", "Limpador profissional para vidros e superfícies lisas. Cabo anatômico e fácil higienização."),
-        ("Pano de Microfibra", "Microfibra de alta absorção. Elimina poeira, sujeira e graxa sem arranhar nem soltar fiapos. Kits com 4, 6 ou 12 unidades."),
-        ("Organizador para Cabos", "Organiza equipamentos de limpeza e otimiza o armazenamento. Polipropileno. Kit com 3 a 6 suportes."),
-        ("Tela para Mictório", "Tela odorizadora com furos anti respingos, embalada individualmente. Fragrâncias: fruit-fruit, canela, citrus e algas. PVC injetável."),
-        ("Placas Sinalizadoras", "Placas para sinalizar e interditar áreas na prevenção de acidentes: cuidado, piso molhado, não entre, área em manutenção. Leves e resistentes."),
-        ("Pulverizador 500ml", "Pulverizador profissional de uso contínuo com alta resistência química. Gatilho ajustável. 500ml."),
-        ("Pulverizador 1L", "Pulverizador profissional de alta resistência química e durabilidade. Gatilho ajustável. 1 litro."),
-        ("Balde 3 Litros", "Balde 3L com graduação interna para diluição correta. Bico dosador na borda. Polipropileno + ABS."),
-        ("Balde 6 Litros", "Balde 6L com graduação interna e bico dosador. Limpeza geral e separação de resíduos."),
-        ("Balde 15L Reforçado", "Balde 15 litros com alça. Acompanha ou recebe espremedor (Tonk). Polipropileno."),
-        ("Balde DUE 30L com Espremedor", "Balde 30L com divisão interna fixa e graduação. Design moderno e resistente, com espremedor de cabo de alumínio."),
-        ("Espremedor Tonk", "Espremedor profundo e eficiente, com excelente performance de secagem. Ajuste perfeito no balde 15L. Ideal para refil mop úmido 150-220g."),
-        ("Kit Carro Funcional", "Kit com 4 baldes (3L vermelho e verde, 6L azul e amarelo) para limpeza por área, evitando contaminação cruzada. Inclui placa sinalizadora."),
-        ("Cabo Extensor 1,40m", "Cabo extensor fixo de 1,40m para mops e acessórios de limpeza. Polipropileno e alumínio."),
-        ("Cabo Telescópico 1,80m a 9m", "Cabos telescópicos profissionais que se estendem de 1,8m a 9m, para áreas altas e de difícil acesso."),
-        ("Caixa Dobrável", "Caixa dobrável com montagem fácil e sistema de travamento no fundo. Suporta 50kg. Polipropileno."),
-        ("Lixeira 12L Click", "Lixeira minimalista com tampa e suporte para bobinas de saco de lixo. ABS e PP."),
-        ("Lixeira 12L Push", "Lixeira minimalista sem tampa, com suporte para saco de lixo. ABS e PP."),
-        ("Lixeira Porta Saco 15L", "Lixeira porta saco de design minimalista, em 3 modelos: sem aro, com aro e aro + tampa. ABS e PP."),
-        ("Lixeira TVV 60L", "Lixeira 60 litros com tampa basculante de ampla abertura. Durabilidade e estabilidade. PP."),
-        ("Lixeira Basculante com Pedal 18L", "Lixeira com pedal de alta resistência e abertura de 75°. Encaixe lateral da tampa. 18 litros."),
-        ("Lixeira Basculante com Pedal 36L", "Lixeira com pedal de alta resistência e abertura de 75°. 36 litros."),
-        ("Lixeira Basculante com Pedal 50L", "Lixeira com pedal de alta resistência e abertura de 75°. 50 litros."),
-        ("Lixeira 100L", "Lixeira 100 litros com opção de rodas, alça para deslocamento e abertura de 85°."),
-        ("Contentor 120L", "Contentor para lixo 120 litros com rodas, para coleta urbana, lixo hospitalar e resíduos industriais. Abertura de 270°."),
-        ("Lixeira 240L", "Lixeira 240 litros com duas rodas de borracha 200mm, para coleta urbana, lixo hospitalar e resíduos industriais."),
-        ("Rodo de Borracha 35cm", "Rodo com borracha dupla expandida de alta absorção e durabilidade. Cabo com rosca euro. 35cm."),
-        ("Rodo de Borracha 45cm", "Rodo com borracha dupla expandida. Cabo com rosca euro. 45cm."),
-        ("Rodo de Borracha 55cm", "Rodo com borracha dupla expandida. 55cm para áreas maiores."),
-        ("Rodo de Borracha 65cm", "Rodo com borracha dupla expandida. 65cm para áreas grandes."),
-        ("Suporte para Mop Pó", "Suporte para mop pó com 2 hastes metálicas de alta flexibilidade. Ideal com cabo de 140cm. Aço e PP."),
-        ("Suporte para Mop Úmido", "Suporte para mop úmido com haste super resistente em formato de presilha, fixa no cabo por rosca euro."),
-        ("Suporte Fibra com Alça", "Suporte de fibra manual pensado na segurança em chapas quentes e locais de difícil acesso. Pega mão anatômico."),
-        ("Refil Mop Pó", "Refil de mop pó de material de qualidade para limpeza diária de pisos."),
-        ("Refil Mop Úmido 330g", "Refil de mop úmido de alta absorção (330g) para limpeza de pisos. Uso profissional."),
-        ("Refil Mopinho 170g", "Refil de mop úmido compacto (170g) para áreas menores e limpeza rápida."),
-        ("Kit Limpa Tudo", "Kit para limpeza geral: suporte fiber lock azul, fibra verde multiuso, fibra branca e cabo extensor 1,40m."),
-        ("Kit Mopinho", "Kit com 3 itens: balde 15L sinalizador, refil mopinho 170g e espremedor. Cores personalizáveis."),
-        ("Kit Mop Úmido Completo", "Kit completo: suporte mop úmido, refil mop úmido ponta dobrada e cabo extensor 1,40m."),
-        ("Kit Carro Funcional Titan", "Kit mais completo Tonk: carro funcional titan com tampa, balde espremedor due, placa sinalizadora, suporte mop úmido, suporte mop pó 60cm, 2 cabos extensores, refil mop úmido 330g, refil mop pó 60cm e pá coletora."),
-        ("Kit Balde Due", "Kit balde due: balde due, placa sinalizadora, suporte mop úmido, cabo extensor preto e refil mop úmido cru."),
+        ("Espátula", "Limpador para box, janelas, frestas e fendas; cabo anatômico, acompanha 2 refis de microfibra."),
+        ("Pá Coletora", "Com tampa e cabo de alumínio; trava na tampa para descarte seguro."),
+        ("Pano de Microfibra", "Alta absorção; elimina poeira, sujeira e graxa, sem arranhar nem soltar fiapos."),
+        ("Tela para Mictório", "Tela odorizadora com furos anti-respingos; fragrâncias Fruit-Fruit, Canela, Citrus e Algas."),
+        ("Organizador para Cabos", "Mantém os cabos presos e otimiza o espaço; kits com 3, 4 e 6 suportes."),
+        ("Placas Sinalizadoras", "Sinalizam e interditam áreas (piso molhado, cuidado, área em manutenção); material PEAD."),
+        ("Pulverizador 500 ml", "Uso profissional, alta resistência química, gatilho ajustável para controle do jato."),
+        ("Pulverizador 1 L", "Uso profissional, alta resistência química, gatilho ajustável para controle do jato."),
+        ("Balde 3 L", "Para limpeza geral e separação de resíduos; material Polipropileno + ABS."),
+        ("Balde 6 L", "Para limpeza geral e separação de resíduos; material Polipropileno + ABS."),
+        ("Balde 15 L Reforçado", "Graduação interna e bico dosador; produto 2 em 1 (balde + placa sinalizadora)."),
+        ("Balde com Espremedor", "Espremedor super resistente com cabo de alumínio e manopla ergonômica."),
+        ("Balde Due 30 L", "Divisão interna fixa com graduação; design arredondado e vibrante."),
+        ("Rodízios (reposição)", "Para baldes e contentores."),
+        ("Caixa Dobrável", "Montagem fácil com sistema de travamento no fundo; suporta 50 kg."),
+        ("Cabos e Extensores", "Cabos telescópicos de 3M, 4,5M, 6M e 9M; cabo extensor de 1,40 m."),
+        ("Lixeira 12 L Click", "Modelo Click (com tampa), com suporte para bobina de saco."),
+        ("Lixeira 12 L Push", "Modelo Push (sem tampa), com suporte para bobina de saco."),
+        ("Lixeira 15 L Porta Saco", "3 modelos: sem aro, com aro e aro + tampa."),
+        ("Lixeira TVV 60 L", "Tampa basculante de ampla abertura, com durabilidade e estabilidade."),
+        ("Lixeira com Pedal 18 L", "Alta resistência, abertura máxima de 75°."),
+        ("Lixeira com Pedal 36 L", "Alta resistência, abertura máxima de 75°."),
+        ("Lixeira com Pedal 50 L", "Alta resistência, abertura máxima de 75°."),
+        ("Lixeira 100 L", "Opção com rodas, alça de deslocamento e abertura de 85°."),
+        ("Contentor 120 L", "Com rodas, ideal para coleta urbana, lixo hospitalar e resíduos industriais."),
+        ("Contentor 240 L", "Duas rodas de 200 mm e design ergonômico."),
+        ("Rodo de Borracha 35 cm", "Borracha dupla expandida de alta absorção."),
+        ("Rodo de Borracha 45 cm", "Borracha dupla expandida de alta absorção."),
+        ("Rodo de Borracha 55 cm", "Borracha dupla expandida de alta absorção."),
+        ("Rodo de Borracha 65 cm", "Borracha dupla expandida de alta absorção."),
+        ("Suporte para Mop Pó", "Com hastes metálicas flexíveis, ideal com cabo de 140 cm."),
+        ("Suporte para Mop Úmido", "Haste em formato de presilha, com fixação por rosca euro."),
+        ("Suporte para Fibra", "Articulação que facilita a limpeza em locais de difícil acesso."),
+        ("Refil para Mops", "Para mop úmido ou mop pó, em material de qualidade."),
+        ("Suporte de Fibra Manual com Alça", "Pega-mão anatômico para segurança em chapas quentes."),
+        ("Kit para Limpeza Titan", "10 itens: carro funcional titan com tampa, balde espremedor Due, placa sinalizadora, suportes de mop, cabos extensores, refis e pá coletora."),
+        ("Kit Carro Funcional Pratic", "Balde Due + placa sinalizadora + carro funcional + suporte de mop + cabo + refil."),
+        ("Kit Balde Due", "Balde Due + placa sinalizadora + suporte de mop úmido + cabo + refil."),
+        ("Kit para Limpeza Completa / Kit Limpa Tudo", "Cabos, suportes e refis para limpeza diária e geral."),
+        ("Kit Mopinho", "Balde 15 L sinalizador + refil mopinho 170 g + espremedor."),
+        ("Kit Mop Úmido Completo", "Suporte mop úmido + refil ponta dobrada + cabo extensor 1,40 m."),
      ]),
 ]
 
 class Command(BaseCommand):
-    help = "Popula o catálogo HES com todos os tópicos e produtos do PDF."
+    help = "Popula o catálogo HES com todos os tópicos e produtos do catálogo."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -416,16 +409,20 @@ class Command(BaseCommand):
                 nome=cat_nome,
                 defaults={"descricao": cat_desc, "ativo": True},
             )
+            # Atualiza a descrição da categoria mesmo se ela já existia
+            if not _ and categoria.descricao != cat_desc:
+                categoria.descricao = cat_desc
+                categoria.save(update_fields=["descricao"])
+
             # Subcategoria padrão "Geral" (o Produto exige uma subcategoria)
             sub, _ = Subcategoria.objects.get_or_create(
                 nome="Geral",
                 categoria=categoria,
                 defaults={"ativo": True, "ordem": 0},
             )
+
             for produto_nome, produto_desc in produtos:
-                # Busca por NOME + SUBCATEGORIA: permite o mesmo produto
-                # aparecer em mais de um tópico do catálogo.
-                Produto.objects.get_or_create(
+                obj, criado = Produto.objects.get_or_create(
                     nome=produto_nome,
                     subcategoria=sub,
                     defaults={
@@ -435,7 +432,12 @@ class Command(BaseCommand):
                         "destaque": False,
                     },
                 )
+                # Atualiza a descrição do produto mesmo se ele já existia
+                if not criado and obj.descricao != produto_desc:
+                    obj.descricao = produto_desc
+                    obj.save(update_fields=["descricao"])
                 total += 1
+
             resumo.append((cat_nome, len(produtos)))
 
         self.stdout.write(self.style.SUCCESS(

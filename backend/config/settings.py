@@ -119,6 +119,15 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # ============================================
+# WHITENOISE — compressão + cache longo (NOVO)
+# ============================================
+# Comprime CSS/JS com GZIP antes de enviar (download menor)
+WHITENOISE_COMPRESS = True
+# Mantém os arquivos estáticos no cache do navegador por 1 ano
+# (o WhiteNoise adiciona o hash do arquivo na URL, então atualiza sozinho)
+WHITENOISE_MAX_AGE = 31536000  # 1 ano em segundos
+
+# ============================================
 # SUPABASE STORAGE
 # ============================================
 SUPABASE_S3_ENDPOINT = config('SUPABASE_S3_ENDPOINT', default='')

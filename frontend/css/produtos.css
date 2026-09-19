@@ -1,448 +1,376 @@
 /* =============================================
-   HES ATACADO — HOME (tema escuro)
+   HES ATACADO — Página de Produtos (Tema Claro)
+   Paleta: branco + azul claro (#0066CC) + preto
    ============================================= */
 
-:root {
-    --azul: #0066CC;
-    --azul-claro: #1a8cff;
-    --preto: #0d0d0d;
-    --preto-suave: #1a1a1a;
-    --cinza: #aaa;
-    --cinza-claro: #ddd;
-    --branco: #ffffff;
-}
+/* Reset básico: remove margens/paddings padrão do navegador */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Variáveis de cor e sombra — centraliza o tema para fácil manutenção */
+:root {
+    --azul: #0066CC;          /* cor principal (botões, links, destaque) */
+    --azul-hover: #1a8cff;    /* tom mais claro ao passar o mouse */
+    --azul-claro: #e6f0ff;    /* fundo suave azulado (imagens, tags) */
+    --branco: #ffffff;        /* fundo dos cards e header */
+    --fundo: #f5f8fc;         /* fundo geral da página */
+    --preto: #0a0a0a;         /* textos e rodapé */
+    --cinza: #5a6b7d;         /* textos secundários */
+    --cinza-claro: #9aa4b2;   /* textos no rodapé escuro */
+    --borda: #dbe4ee;         /* bordas suaves */
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.06);           /* sombra padrão dos cards */
+    --sombra-hover: 0 12px 32px rgba(0, 102, 204, 0.14); /* sombra ao passar o mouse */
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background: var(--preto);
-    color: var(--branco);
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--preto);
     line-height: 1.6;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
+/* Container centraliza o conteúdo e limita a largura máxima */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* =============================================
-   HEADER
+   HEADER — barra de navegação fixa no topo
    ============================================= */
 .header {
-    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo à esquerda, menu à direita */
+    padding: 1rem 2.5rem;
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+    position: sticky; /* fica fixa ao rolar a página */
     top: 0;
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: rgba(13, 13, 13, 0.95);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
+/* Logo (clicar leva ao admin) — maior, com leve zoom no hover */
+.logo-img { height: 72px; width: auto; display: block; }
+.logo-footer { height: 56px; } /* logo menor no rodapé */
 
-.logo-img {
-    height: 48px;
-    width: auto;
-}
-
-.nav {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
-
+/* Menu de navegação */
+.nav { display: flex; gap: 2.2rem; list-style: none; }
 .nav a {
-    font-weight: 500;
-    color: var(--branco);
-    padding: 0.4rem 0;
-    position: relative;
-    transition: color 0.2s;
-}
-
-.nav a:hover,
-.nav a.active {
-    color: var(--azul-claro);
-}
-
-.nav a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--azul);
-}
-
-/* =============================================
-   HERO
-   ============================================= */
-.hero {
-    text-align: center;
-    padding: 6rem 1.5rem;
-    background: linear-gradient(135deg, #0d0d0d 0%, #0a1a2e 100%);
-}
-
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    max-width: 800px;
-    margin: 0 auto 1rem;
-}
-
-.hero h1 span {
-    color: var(--azul-claro);
-}
-
-.hero p {
-    font-size: 1.2rem;
     color: var(--cinza);
-    max-width: 640px;
-    margin: 0 auto 2rem;
-}
-
-.btn-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--azul);
-    color: var(--branco);
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background 0.2s, transform 0.2s;
-}
-
-.btn-cta:hover {
-    background: var(--azul-claro);
-    transform: translateY(-2px);
-}
-
-/* =============================================
-   SEÇÕES
-   ============================================= */
-.produtos-section {
-    padding: 4rem 0;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-}
-
-.section-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.section-header .subtitle {
-    color: var(--cinza);
-    margin-top: 0.4rem;
-}
-
-.line {
-    width: 60px;
-    height: 3px;
-    background: var(--azul);
-    margin: 1rem auto 0;
-    border-radius: 2px;
-}
-
-/* =============================================
-   CARROSSEL — CARD DE PRODUTO (agora é um link)
-   ============================================= */
-.feed-carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.feed-stage {
-    display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 0.5rem;
-    scrollbar-width: thin;
-}
-
-.feed-stage::-webkit-scrollbar {
-    height: 6px;
-}
-
-.feed-stage::-webkit-scrollbar-thumb {
-    background: var(--azul);
-    border-radius: 3px;
-}
-
-.feed-arrow {
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border: none;
-    border-radius: 50%;
-    background: var(--preto-suave);
-    color: var(--branco);
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-}
-
-.feed-arrow:hover {
-    background: var(--azul);
-}
-
-.feed-counter {
-    text-align: center;
-    color: var(--cinza);
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-/* Card como link — ocupa o card inteiro, sem sublinhado */
-.produto-card {
-    display: block;
-    flex-shrink: 0;
-    width: 260px;
     text-decoration: none;
-    color: inherit;
-    background: var(--preto-suave);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    padding: 0.3rem 0;
+}
+.nav a:hover { color: var(--azul); }
+.nav a.active { color: var(--azul); font-weight: 700; border-bottom: 2px solid var(--azul); }
+
+/* =============================================
+   TÍTULO DA PÁGINA — cabeçalho do catálogo
+   ============================================= */
+.page-title {
+    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--fundo) 100%);
+    padding: 3.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--borda);
+}
+.page-title h1 { font-size: 2.4rem; font-weight: 800; color: var(--preto); }
+.page-title p { color: var(--cinza); margin-top: 0.4rem; }
+
+/* =============================================
+   CATÁLOGO — sidebar de categorias + grade de produtos
+   ============================================= */
+.catalogo-section { padding: 2.5rem 0 4.5rem; }
+
+/* Layout em 2 colunas: sidebar (250px) + produtos (resto).
+   align-items: start é ESSENCIAL para o sticky funcionar */
+.catalogo-layout { display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start; }
+
+/* ---------- SIDEBAR DE CATEGORIAS ---------- */
+/* Sidebar MENOR e FIXA: fica presa abaixo do header e não se move ao rolar */
+.sidebar-categorias {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+    position: sticky; /* gruda na tela ao rolar a página */
+    top: 120px;       /* altura do header (~105px) + folga */
+    max-height: 60vh; /* ocupa no máx. 60% da tela (menor) */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* esconde o excesso fora da lista */
 }
 
-.produto-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.35);
-    border-color: var(--azul);
+/* O título "Categorias" fica sempre visível (não rola junto) */
+.sidebar-categorias h3 {
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--preto);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.sidebar-categorias h3 i { color: var(--azul); } /* ícone do título */
+
+/* Só a LISTA de categorias tem a barrinha de rolagem interna.
+   min-height: 0 é ESSENCIAL para liberar o encolhimento */
+#listaCategorias {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
-.produto-card .img-wrapper {
+/* Barrinha de rolagem fininha na cor da marca */
+#listaCategorias::-webkit-scrollbar { width: 6px; }
+#listaCategorias::-webkit-scrollbar-track { background: #f0f4f8; border-radius: 3px; }
+#listaCategorias::-webkit-scrollbar-thumb { background: #0066CC; border-radius: 3px; }
+
+/* Botão de cada categoria da sidebar */
+.categoria-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* nome à esquerda, contagem à direita */
     width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    background: #222;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: var(--cinza);
+    text-align: left;
+    transition: background 0.2s, color 0.2s;
+}
+.categoria-btn:hover { background: var(--azul-claro); color: var(--azul); }
+.categoria-btn.active { /* categoria selecionada */
+    background: var(--azul);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+/* Selo com a quantidade de produtos de cada categoria */
+.categoria-btn .cat-qtd {
+    background: var(--azul-claro);
+    color: var(--azul);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.1rem 0.5rem;
+    border-radius: 12px;
+}
+.categoria-btn.active .cat-qtd {
+    background: rgba(255, 255, 255, 0.25);
+    color: var(--branco);
+}
+
+/* ---------- ÁREA DE PRODUTOS ---------- */
+.produtos-area { min-width: 0; } /* evita estouro da grade no grid */
+
+/* Topo da área: título da categoria + contador */
+.area-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.area-topo h2 { font-size: 1.5rem; font-weight: 800; color: var(--preto); }
+.contador { color: var(--cinza); font-size: 0.9rem; font-weight: 500; }
+
+/* ---------- GRADE DE PRODUTOS ---------- */
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.8rem;
+}
+
+/* Card de produto — refinado, com sombra e elevação no hover */
+.produto-card {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    overflow: hidden; /* corta a imagem nos cantos arredondados */
+    box-shadow: var(--sombra);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.produto-card:hover {
+    transform: translateY(-6px); /* eleva o card */
+    border-color: var(--azul);
+    box-shadow: var(--sombra-hover);
+}
+
+/* Área da imagem do produto */
+.img-wrapper {
+    height: 210px;
+    background: var(--azul-claro);
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
-
-.produto-card .img-wrapper img {
+.img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
+    object-fit: cover; /* preenche sem distorcer */
+    transition: transform 0.4s ease;
 }
+.produto-card:hover .img-wrapper img { transform: scale(1.06); } /* zoom suave */
 
-.produto-card .sem-imagem {
-    color: var(--cinza);
-    font-size: 0.9rem;
-    text-align: center;
-    padding: 1rem;
-}
+/* Texto exibido quando o produto não tem imagem */
+.sem-imagem { color: var(--cinza); font-size: 0.85rem; text-align: center; padding: 1rem; }
 
-.produto-card .produto-info {
-    padding: 1rem;
-}
+/* Informações do produto */
+.produto-info { padding: 1.3rem 1.5rem 1.5rem; }
 
-.produto-card .categoria-tag {
+/* Tag da categoria (selo azul) */
+.categoria-tag {
     display: inline-block;
-    font-size: 0.7rem;
+    background: var(--azul-claro);
+    color: var(--azul);
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--azul-claro);
-    margin-bottom: 0.4rem;
+    letter-spacing: 0.4px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    margin-bottom: 0.7rem;
 }
+.produto-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+.produto-info p { color: var(--cinza); font-size: 0.9rem; }
 
-.produto-card h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 0.4rem;
-    color: var(--branco);
-}
-
-.produto-card p {
-    font-size: 0.85rem;
-    color: var(--cinza);
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* =============================================
-   SOBRE / INFO CARDS
-   ============================================= */
-.info-section {
-    padding: 4rem 0;
-    background: var(--preto-suave);
-}
-
-.info-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.info-card {
-    background: #222;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 2rem;
+/* Mensagem quando não há produtos (carregando / vazio) */
+.mensagem-vazia {
     text-align: center;
-}
-
-.info-card .icon {
-    font-size: 2rem;
-    color: var(--azul-claro);
-    margin-bottom: 1rem;
-}
-
-.info-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.6rem;
-}
-
-.info-card p {
     color: var(--cinza);
-    font-size: 0.95rem;
-}
-
-.info-card-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
+    grid-column: 1 / -1;
+    padding: 2rem 0;
 }
 
 /* =============================================
-   FOOTER
+   INSTAGRAM — card clicável (novo)
    ============================================= */
-.footer {
-    background: #0a0a0a;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 3rem 2rem 1.5rem;
+.instagram-section {
+    padding: 3.5rem 0;
+    background: var(--fundo);
 }
+.instagram-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.8rem 2.2rem;
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    box-shadow: var(--sombra);
+    text-decoration: none;
+    color: var(--preto);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.instagram-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--azul);
+    box-shadow: var(--sombra-hover);
+}
+.instagram-icon {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: var(--branco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+.instagram-texto { flex: 1; text-align: left; }
+.instagram-texto h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.instagram-texto p { color: var(--cinza); font-size: 0.92rem; margin: 0; }
+.instagram-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--azul);
+    color: var(--branco);
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+.instagram-card:hover .instagram-cta { background: var(--azul-hover); }
 
+/* =============================================
+   RODAPÉ — fundo preto com 4 colunas
+   ============================================= */
+.footer { background: var(--preto); color: var(--cinza-claro); padding-top: 3.5rem; margin-top: 2rem; }
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2.5rem 2.5rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr; /* logo maior + 3 colunas */
+    gap: 2.5rem;
 }
+.footer-logo { margin-bottom: 0.6rem; }
+.footer-tagline { font-size: 0.9rem; margin-bottom: 1rem; }
 
-.footer-logo .logo-footer {
-    height: 40px;
-}
-
-.footer-tagline {
-    color: var(--cinza);
-    margin: 0.6rem 0;
-    font-size: 0.9rem;
-}
-
+/* Ícones de redes sociais (círculos) */
+.social-icons { display: flex; gap: 0.8rem; }
 .social-icons a {
-    color: var(--cinza);
-    font-size: 1.4rem;
-    transition: color 0.2s;
-}
-
-.social-icons a:hover {
-    color: var(--azul-claro);
-}
-
-.footer-col h4 {
-    margin-bottom: 1rem;
-    color: var(--branco);
-}
-
-.footer-col ul {
-    list-style: none;
-}
-
-.footer-col ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-col ul li a {
-    color: var(--cinza);
-    transition: color 0.2s;
-}
-
-.footer-col ul li a:hover {
-    color: var(--azul-claro);
-}
-
-.footer-contact {
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    color: var(--cinza);
-    font-size: 0.9rem;
-    margin-bottom: 0.6rem;
+    justify-content: center;
+    border: 1px solid #2a2f36;
+    border-radius: 50%;
+    color: var(--cinza-claro);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
+.social-icons a:hover { background: var(--azul); color: var(--branco); border-color: var(--azul); }
 
-.footer-contact i {
-    color: var(--azul-claro);
-}
+/* Colunas de links do rodapé */
+.footer-col h4 { color: var(--branco); font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.5rem; }
+.footer-col a { color: var(--cinza-claro); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--azul-hover); }
 
-.footer-bottom {
-    text-align: center;
-    color: var(--cinza);
-    font-size: 0.85rem;
-    padding-top: 1.5rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
+/* Linhas de contato com ícone */
+.footer-contact { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.7rem; font-size: 0.9rem; }
+.footer-contact i { color: var(--azul); margin-top: 0.2rem; }
+
+/* Barra inferior do rodapé (copyright) */
+.footer-bottom { border-top: 1px solid #23282f; padding: 1.2rem 0; text-align: center; font-size: 0.85rem; }
 
 /* =============================================
-   RESPONSIVO
+   RESPONSIVO — adapta para telas menores
    ============================================= */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
+@media (max-width: 900px) {
+    .header { flex-direction: column; gap: 0.8rem; padding: 1rem; }
+    .logo-img { height: 60px; }
+    .nav { gap: 1.2rem; }
+    .footer-content { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
+}
 
-    .nav {
-        gap: 1.2rem;
-    }
+@media (max-width: 800px) {
+    .catalogo-layout { grid-template-columns: 1fr; } /* sidebar vai para cima */
+    .sidebar-categorias { position: static; top: auto; max-height: none; overflow: visible; }
+    #listaCategorias { overflow: visible; }
+}
 
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .hero {
-        padding: 4rem 1rem;
-    }
-
-    .produto-card {
-        width: 220px;
-    }
+/* Card do Instagram empilhado no celular */
+@media (max-width: 600px) {
+    .instagram-card { flex-direction: column; text-align: center; }
+    .instagram-texto { text-align: center; }
 }

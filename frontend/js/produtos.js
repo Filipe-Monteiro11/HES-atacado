@@ -53,22 +53,19 @@ async function selecionarCategoria(botao) {
 
     if (!produtos.length) {
         container.innerHTML = '<p class="mensagem-vazia">Nenhum produto encontrado nesta categoria.</p>';
-        return;
+    } else {
+        container.innerHTML = produtos.map(criarCardProduto).join('');
     }
 
-    container.innerHTML = produtos.map(criarCardProduto).join('');
-
-    // No celular, rola até a área de produtos para o cliente
-    // ver os produtos da categoria escolhida sem precisar descer a página <<<
-    if (window.innerWidth <= 800) {
-        const areaProdutos = document.querySelector('.produtos-area');
-        if (areaProdutos) {
-            // Compensa a altura do header fixo (sticky)
-            const header = document.querySelector('.header');
-            const offset = header ? header.offsetHeight + 12 : 12;
-            const topo = areaProdutos.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: topo, behavior: 'smooth' });
-        }
+    // CORRIGIDO: SEMPRE rola até o topo da área de produtos ao trocar de categoria,
+    // para o usuário ver o início da nova categoria (antes só rolava no celular).
+    const areaProdutos = document.querySelector('.produtos-area');
+    if (areaProdutos) {
+        // Compensa a altura do header fixo (sticky)
+        const header = document.querySelector('.header');
+        const offset = header ? header.offsetHeight + 12 : 12;
+        const topo = areaProdutos.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: topo, behavior: 'smooth' });
     }
 }
 

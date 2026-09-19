@@ -197,11 +197,11 @@ CACHES = {
 }
 
 # ============================================
-# SESSÃO
+# SESSÃO — CORRIGIDO (resolve deslogamento no admin)
 # ============================================
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 60 * 60 * 2
-SESSION_SAVE_EVERY_REQUEST = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 60 * 60 * 8      # 8 horas
+SESSION_SAVE_EVERY_REQUEST = True     # renova a sessão a cada requisição
 SESSION_COOKIE_HTTPONLY = True
 
 # ============================================

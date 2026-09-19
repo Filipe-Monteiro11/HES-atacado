@@ -32,25 +32,25 @@ document.addEventListener('DOMContentLoaded', function () {
         return v === true || v === 1 || v === '1' || v === 'true' || v === 'sim';
     }
 
-   function renderCard(p) {
-    const nome = esc(nomeDe(p));
-    const cat = esc(categoriaDe(p));
-    const img = imagemDe(p);
-    // Link para a página de produtos filtrada pela categoria do produto
-    const idCat = p.categoria_id || '';
-    const link = `/produtos/?categoria=${idCat}`;
-    const imagem = img
-        ? `<img src="${img}" alt="${nome}" loading="lazy">`
-        : `<div class="placeholder"><i class="fa-regular fa-image"></i><span>Imagem em breve</span></div>`;
-    return `
-        <a href="${link}" class="feed-card" data-categoria="${idCat}">
-            <div class="feed-img">${imagem}</div>
-            <div class="feed-body">
-                ${cat ? `<span class="feed-tag">${cat}</span>` : ''}
-                <h3 class="feed-nome">${nome}</h3>
-            </div>
-        </a>`;
-}
+    function renderCard(p) {
+        const nome = esc(nomeDe(p));
+        const cat = esc(categoriaDe(p));
+        const img = imagemDe(p);
+        // Link para a página de produtos filtrada pela categoria do produto
+        const idCat = p.categoria_id || '';
+        const link = `/produtos/?categoria=${idCat}`;
+        const imagem = img
+            ? `<img src="${img}" alt="${nome}" loading="lazy">`
+            : `<div class="placeholder"><i class="fa-regular fa-image"></i><span>Imagem em breve</span></div>`;
+        return `
+            <a href="${link}" class="feed-card" data-categoria="${idCat}">
+                <div class="feed-img">${imagem}</div>
+                <div class="feed-body">
+                    ${cat ? `<span class="feed-tag">${cat}</span>` : ''}
+                    <h3 class="feed-nome">${nome}</h3>
+                </div>
+            </a>`;
+    }
 
     function atualizar() {
         const cards = stage.querySelectorAll('.feed-card');

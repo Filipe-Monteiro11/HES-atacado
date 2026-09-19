@@ -1,5 +1,6 @@
 /* =============================================
-   HES ATACADO — PÁGINA DE PRODUTOS (tema escuro)
+   HES ATACADO — PÁGINA DE PRODUTOS (tema claro)
+   Mesma paleta do home.css
    ============================================= */
 
 :root {
@@ -25,8 +26,8 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: var(--preto);
-    color: var(--branco);
+    background: var(--fundo);
+    color: var(--preto);
     line-height: 1.6;
 }
 
@@ -52,9 +53,8 @@ a {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(13, 13, 13, 0.95);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
 }
 
 .logo {
@@ -75,7 +75,7 @@ a {
 
 .nav a {
     font-weight: 500;
-    color: var(--branco);
+    color: var(--preto);
     padding: 0.4rem 0;
     position: relative;
     transition: color 0.2s;
@@ -83,7 +83,7 @@ a {
 
 .nav a:hover,
 .nav a.active {
-    color: var(--azul-claro);
+    color: var(--azul);
 }
 
 .nav a.active::after {
@@ -102,12 +102,13 @@ a {
 .page-title {
     text-align: center;
     padding: 3.5rem 1.5rem;
-    background: linear-gradient(135deg, #ffff 0%, #dde4ee 100%);
+    background: linear-gradient(135deg, var(--branco) 0%, var(--azul-claro) 100%);
 }
 
 .page-title h1 {
     font-size: 2.4rem;
     font-weight: 800;
+    color: var(--preto);
 }
 
 .page-title p {
@@ -133,12 +134,13 @@ a {
    SIDEBAR DE CATEGORIAS
    ============================================= */
 .sidebar-categorias {
-    background: var(--preto-suave);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--branco);
+    border: 1px solid var(--borda);
     border-radius: 12px;
     padding: 1.5rem;
     position: sticky;
     top: 90px;
+    box-shadow: var(--sombra);
 }
 
 .sidebar-categorias h3 {
@@ -147,7 +149,7 @@ a {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--azul-claro);
+    color: var(--azul);
 }
 
 .categoria-btn {
@@ -157,7 +159,7 @@ a {
     width: 100%;
     background: transparent;
     border: none;
-    color: var(--cinza-claro);
+    color: var(--cinza);
     padding: 0.7rem 0.8rem;
     margin-bottom: 0.3rem;
     border-radius: 8px;
@@ -168,8 +170,8 @@ a {
 }
 
 .categoria-btn:hover {
-    background: rgba(0, 102, 204, 0.15);
-    color: var(--branco);
+    background: var(--azul-claro);
+    color: var(--azul);
 }
 
 .categoria-btn.active {
@@ -184,13 +186,15 @@ a {
 
 .cat-qtd {
     font-size: 0.75rem;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--azul-claro);
+    color: var(--azul);
     padding: 0.15rem 0.5rem;
     border-radius: 20px;
 }
 
 .categoria-btn.active .cat-qtd {
     background: rgba(255, 255, 255, 0.25);
+    color: var(--branco);
 }
 
 /* =============================================
@@ -205,13 +209,14 @@ a {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--borda);
     padding-bottom: 1rem;
 }
 
 .area-topo h2 {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--preto);
 }
 
 .contador {
@@ -231,16 +236,17 @@ a {
 .produto-card {
     display: block;
     color: inherit;
-    background: var(--preto-suave);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--branco);
+    border: 1px solid var(--borda);
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: var(--sombra);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
 }
 
 .produto-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.35);
+    box-shadow: var(--sombra-hover);
     border-color: var(--azul);
 }
 
@@ -248,7 +254,7 @@ a {
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #222;
+    background: var(--azul-claro);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,7 +283,7 @@ a {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--azul-claro);
+    color: var(--azul);
     margin-bottom: 0.4rem;
 }
 
@@ -285,7 +291,7 @@ a {
     font-size: 1rem;
     font-weight: 600;
     margin: 0 0 0.4rem;
-    color: var(--branco);
+    color: var(--preto);
 }
 
 /* CORREÇÃO: remove o sublinhado da descrição (e de todo o card-link) */
@@ -318,8 +324,8 @@ a {
    FOOTER
    ============================================= */
 .footer {
-    background: #0a0a0a;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--preto);
+    color: var(--branco);
     padding: 3rem 2rem 1.5rem;
 }
 
@@ -336,19 +342,19 @@ a {
 }
 
 .footer-tagline {
-    color: var(--cinza);
+    color: var(--cinza-claro);
     margin: 0.6rem 0;
     font-size: 0.9rem;
 }
 
 .social-icons a {
-    color: var(--cinza);
+    color: var(--cinza-claro);
     font-size: 1.4rem;
     transition: color 0.2s;
 }
 
 .social-icons a:hover {
-    color: var(--azul-claro);
+    color: var(--azul-hover);
 }
 
 .footer-col h4 {
@@ -365,34 +371,34 @@ a {
 }
 
 .footer-col ul li a {
-    color: var(--cinza);
+    color: var(--cinza-claro);
     transition: color 0.2s;
 }
 
 .footer-col ul li a:hover {
-    color: var(--azul-claro);
+    color: var(--azul-hover);
 }
 
 .footer-contact {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--cinza);
+    color: var(--cinza-claro);
     font-size: 0.9rem;
     margin-bottom: 0.6rem;
 }
 
 .footer-contact i {
-    color: var(--azul-claro);
+    color: var(--azul-hover);
 }
 
 .footer-bottom {
     text-align: center;
-    color: var(--cinza);
+    color: var(--cinza-claro);
     font-size: 0.85rem;
     padding-top: 1.5rem;
     margin-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* =============================================

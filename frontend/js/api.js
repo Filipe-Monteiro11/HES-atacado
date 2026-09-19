@@ -43,15 +43,16 @@ function criarCardProduto(produto) {
         : `<span class="sem-imagem">${produto.codigo}</span>`;
 
     const categoriaNome = produto.categoria || 'Produto';
+    const linkCategoria = `/produtos/?categoria=${produto.categoria_id || ''}`;
 
     return `
-        <div class="produto-card" data-categoria="${produto.categoria_id || ''}">
+        <a href="${linkCategoria}" class="produto-card" data-categoria="${produto.categoria_id || ''}">
             <div class="img-wrapper">${imagem}</div>
             <div class="produto-info">
                 <span class="categoria-tag">${categoriaNome}</span>
                 <h3>${produto.nome}</h3>
                 ${produto.descricao ? `<p>${produto.descricao}</p>` : ''}
             </div>
-        </div>
+        </a>
     `;
 }

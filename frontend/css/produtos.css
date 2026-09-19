@@ -137,26 +137,26 @@ a {
     background: var(--branco);
     border: 1px solid var(--borda);
     border-radius: 10px;
-    padding: 1rem;
+    padding: 1rem;                 /* reduzido de 1.5rem */
     position: sticky;
     top: 90px;
     box-shadow: var(--sombra);
-    max-height: 50vh;              /* ← card com metade da altura da tela */
+    max-height: calc(100vh - 140px);  /* mais baixo */
     display: flex;
     flex-direction: column;
 }
 
 .sidebar-categorias h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;            /* reduzido de 1.1rem */
     margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--azul);
-    flex-shrink: 0;                /* título fixo, não rola */
+    flex-shrink: 0;
 }
 
-/* A LISTA rola internamente, mostrando o resto conforme o scroll */
+/* A LISTA rola internamente */
 #listaCategorias {
     overflow-y: auto;
     flex: 1;
@@ -171,8 +171,82 @@ a {
     background: var(--borda);
     border-radius: 3px;
 }
-#listaCategorias::-webkit-scrollbar-thumb:hover {
+
+.categoria-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--cinza);
+    padding: 0.45rem 0.6rem;       /* reduzido de 0.7rem */
+    margin-bottom: 0.15rem;        /* reduzido de 0.3rem */
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.85rem;            /* reduzido de 0.95rem */
+    transition: background 0.2s, color 0.2s;
+}
+
+.categoria-btn:hover {
+    background: var(--azul-claro);
+    color: var(--azul);
+}
+
+.categoria-btn.active {
     background: var(--azul);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.cat-nome {
+    flex: 1;
+}
+
+.cat-qtd {
+    font-size: 0.7rem;             /* reduzido */
+    background: var(--azul-claro);
+    color: var(--azul);
+    padding: 0.1rem 0.4rem;
+    border-radius: 20px;
+}
+
+.categoria-btn.active .cat-qtd {
+    background: rgba(255, 255, 255, 0.25);
+    color: var(--branco);
+}
+/* =============================================
+   ÁREA DE PRODUTOS
+   ============================================= */
+.produtos-area {
+    min-width: 0;
+}
+
+.area-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 1rem;
+}
+
+.area-topo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--preto);
+}
+
+.contador {
+    color: var(--cinza);
+    font-size: 0.9rem;
+}
+
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
 }
 
 /* =============================================

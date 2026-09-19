@@ -131,32 +131,32 @@ a {
 }
 
 /* =============================================
-   SIDEBAR DE CATEGORIAS (com rolagem interna)
+   SIDEBAR DE CATEGORIAS (compacta)
    ============================================= */
 .sidebar-categorias {
     background: var(--branco);
     border: 1px solid var(--borda);
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 10px;
+    padding: 1rem;                 /* reduzido de 1.5rem */
     position: sticky;
     top: 90px;
     box-shadow: var(--sombra);
-    max-height: calc(100vh - 120px);  /* limita a altura ao tamanho da tela */
+    max-height: calc(100vh - 140px);  /* mais baixo */
     display: flex;
     flex-direction: column;
 }
 
 .sidebar-categorias h3 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+    font-size: 0.95rem;            /* reduzido de 1.1rem */
+    margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--azul);
-    flex-shrink: 0;  /* título fica fixo, não rola */
+    flex-shrink: 0;
 }
 
-/* A LISTA é que rola, mantendo o título visível */
+/* A LISTA rola internamente */
 #listaCategorias {
     overflow-y: auto;
     flex: 1;
@@ -164,16 +164,12 @@ a {
     padding-right: 0.4rem;
 }
 
-/* Barra de rolagem discreta */
 #listaCategorias::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 #listaCategorias::-webkit-scrollbar-thumb {
     background: var(--borda);
     border-radius: 3px;
-}
-#listaCategorias::-webkit-scrollbar-thumb:hover {
-    background: var(--azul);
 }
 
 .categoria-btn {
@@ -184,12 +180,12 @@ a {
     background: transparent;
     border: none;
     color: var(--cinza);
-    padding: 0.7rem 0.8rem;
-    margin-bottom: 0.3rem;
-    border-radius: 8px;
+    padding: 0.45rem 0.6rem;       /* reduzido de 0.7rem */
+    margin-bottom: 0.15rem;        /* reduzido de 0.3rem */
+    border-radius: 6px;
     cursor: pointer;
     text-align: left;
-    font-size: 0.95rem;
+    font-size: 0.85rem;            /* reduzido de 0.95rem */
     transition: background 0.2s, color 0.2s;
 }
 
@@ -209,10 +205,10 @@ a {
 }
 
 .cat-qtd {
-    font-size: 0.75rem;
+    font-size: 0.7rem;             /* reduzido */
     background: var(--azul-claro);
     color: var(--azul);
-    padding: 0.15rem 0.5rem;
+    padding: 0.1rem 0.4rem;
     border-radius: 20px;
 }
 

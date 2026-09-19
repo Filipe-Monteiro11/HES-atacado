@@ -425,4 +425,431 @@ a {
     .page-title h1 {
         font-size: 1.8rem;
     }
+}/* =============================================
+   HES ATACADO — PÁGINA DE PRODUTOS (tema claro)
+   Mesma paleta do home.css
+   ============================================= */
+
+:root {
+    --azul: #0066CC;
+    --azul-hover: #1a8cff;
+    --azul-claro: #e6f0ff;
+    --branco: #ffffff;
+    --fundo: #f5f8fc;
+    --preto: #0a0a0a;
+    --preto-2: #14161a;
+    --cinza: #5a6b7d;
+    --cinza-claro: #9aa4b2;
+    --borda: #dbe4ee;
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(0, 102, 204, 0.14);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--fundo);
+    color: var(--preto);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 48px;
+    width: auto;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav a {
+    font-weight: 500;
+    color: var(--preto);
+    padding: 0.4rem 0;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+    color: var(--azul);
+}
+
+.nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--azul);
+}
+
+/* =============================================
+   TÍTULO DA PÁGINA
+   ============================================= */
+.page-title {
+    text-align: center;
+    padding: 3.5rem 1.5rem;
+    background: linear-gradient(135deg, var(--branco) 0%, var(--azul-claro) 100%);
+}
+
+.page-title h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--preto);
+}
+
+.page-title p {
+    color: var(--cinza);
+    margin-top: 0.5rem;
+}
+
+/* =============================================
+   CATÁLOGO — LAYOUT (sidebar + produtos)
+   ============================================= */
+.catalogo-section {
+    padding: 3rem 0;
+}
+
+.catalogo-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* =============================================
+   SIDEBAR DE CATEGORIAS
+   ============================================= */
+.sidebar-categorias {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 90px;
+    box-shadow: var(--sombra);
+}
+
+.sidebar-categorias h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--azul);
+}
+
+.categoria-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--cinza);
+    padding: 0.7rem 0.8rem;
+    margin-bottom: 0.3rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.95rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.categoria-btn:hover {
+    background: var(--azul-claro);
+    color: var(--azul);
+}
+
+.categoria-btn.active {
+    background: var(--azul);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.cat-nome {
+    flex: 1;
+}
+
+.cat-qtd {
+    font-size: 0.75rem;
+    background: var(--azul-claro);
+    color: var(--azul);
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+}
+
+.categoria-btn.active .cat-qtd {
+    background: rgba(255, 255, 255, 0.25);
+    color: var(--branco);
+}
+
+/* =============================================
+   ÁREA DE PRODUTOS
+   ============================================= */
+.produtos-area {
+    min-width: 0;
+}
+
+.area-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 1rem;
+}
+
+.area-topo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--preto);
+}
+
+.contador {
+    color: var(--cinza);
+    font-size: 0.9rem;
+}
+
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+/* =============================================
+   CARD DE PRODUTO (é um link <a>)
+   ============================================= */
+.produto-card {
+    display: block;
+    color: inherit;
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+}
+
+.produto-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
+    border-color: var(--azul);
+}
+
+.produto-card .img-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--azul-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.produto-card .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.produto-card .sem-imagem {
+    color: var(--cinza);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.produto-card .produto-info {
+    padding: 1rem;
+}
+
+.produto-card .categoria-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--azul);
+    margin-bottom: 0.4rem;
+}
+
+.produto-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: var(--preto);
+}
+
+/* CORREÇÃO: remove o sublinhado da descrição (e de todo o card-link) */
+.produto-card,
+.produto-card * {
+    text-decoration: none;
+}
+
+/* Descrição completa — sem cortar em 3 linhas */
+.produto-card p {
+    font-size: 0.85rem;
+    color: var(--cinza);
+    margin: 0;
+}
+
+/* =============================================
+   MENSAGENS VAZIAS
+   ============================================= */
+.mensagem-vazia {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--cinza);
+    padding: 3rem 0;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer {
+    background: var(--preto);
+    color: var(--branco);
+    padding: 3rem 2rem 1.5rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.footer-logo .logo-footer {
+    height: 40px;
+}
+
+.footer-tagline {
+    color: var(--cinza-claro);
+    margin: 0.6rem 0;
+    font-size: 0.9rem;
+}
+
+.social-icons a {
+    color: var(--cinza-claro);
+    font-size: 1.4rem;
+    transition: color 0.2s;
+}
+
+.social-icons a:hover {
+    color: var(--azul-hover);
+}
+
+.footer-col h4 {
+    margin-bottom: 1rem;
+    color: var(--branco);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-col ul li a {
+    color: var(--cinza-claro);
+    transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+    color: var(--azul-hover);
+}
+
+.footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--cinza-claro);
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+.footer-contact i {
+    color: var(--azul-hover);
+}
+
+.footer-bottom {
+    text-align: center;
+    color: var(--cinza-claro);
+    font-size: 0.85rem;
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =============================================
+   RESPONSIVO
+   ============================================= */
+@media (max-width: 800px) {
+    .catalogo-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-categorias {
+        position: static;
+        max-height: 260px;
+        overflow-y: auto;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .nav {
+        gap: 1.2rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.8rem;
+    }
 }

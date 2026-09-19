@@ -131,7 +131,7 @@ a {
 }
 
 /* =============================================
-   SIDEBAR DE CATEGORIAS
+   SIDEBAR DE CATEGORIAS (com rolagem interna)
    ============================================= */
 .sidebar-categorias {
     background: var(--branco);
@@ -141,6 +141,9 @@ a {
     position: sticky;
     top: 90px;
     box-shadow: var(--sombra);
+    max-height: calc(100vh - 120px);  /* limita a altura ao tamanho da tela */
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-categorias h3 {
@@ -150,51 +153,27 @@ a {
     align-items: center;
     gap: 0.5rem;
     color: var(--azul);
+    flex-shrink: 0;  /* título fica fixo, não rola */
 }
 
-.categoria-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: var(--cinza);
-    padding: 0.7rem 0.8rem;
-    margin-bottom: 0.3rem;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    font-size: 0.95rem;
-    transition: background 0.2s, color 0.2s;
-}
-
-.categoria-btn:hover {
-    background: var(--azul-claro);
-    color: var(--azul);
-}
-
-.categoria-btn.active {
-    background: var(--azul);
-    color: var(--branco);
-    font-weight: 600;
-}
-
-.cat-nome {
+/* A LISTA é que rola, mantendo o título visível */
+#listaCategorias {
+    overflow-y: auto;
     flex: 1;
+    min-height: 0;
+    padding-right: 0.4rem;
 }
 
-.cat-qtd {
-    font-size: 0.75rem;
-    background: var(--azul-claro);
-    color: var(--azul);
-    padding: 0.15rem 0.5rem;
-    border-radius: 20px;
+/* Barra de rolagem discreta */
+#listaCategorias::-webkit-scrollbar {
+    width: 6px;
 }
-
-.categoria-btn.active .cat-qtd {
-    background: rgba(255, 255, 255, 0.25);
-    color: var(--branco);
+#listaCategorias::-webkit-scrollbar-thumb {
+    background: var(--borda);
+    border-radius: 3px;
+}
+#listaCategorias::-webkit-scrollbar-thumb:hover {
+    background: var(--azul);
 }
 
 /* =============================================

@@ -300,14 +300,11 @@ a {
     text-decoration: none;
 }
 
+/* Descrição completa — sem cortar em 3 linhas */
 .produto-card p {
     font-size: 0.85rem;
     color: var(--cinza);
     margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 /* =============================================

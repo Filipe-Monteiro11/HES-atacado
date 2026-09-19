@@ -131,7 +131,7 @@ a {
 }
 
 /* =============================================
-   SIDEBAR DE CATEGORIAS
+   SIDEBAR DE CATEGORIAS (com rolagem interna)
    ============================================= */
 .sidebar-categorias {
     background: var(--branco);
@@ -141,6 +141,9 @@ a {
     position: sticky;
     top: 90px;
     box-shadow: var(--sombra);
+    max-height: calc(100vh - 120px);  /* limita a altura ao tamanho da tela */
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-categorias h3 {
@@ -150,6 +153,27 @@ a {
     align-items: center;
     gap: 0.5rem;
     color: var(--azul);
+    flex-shrink: 0;  /* título fica fixo, não rola */
+}
+
+/* A LISTA é que rola, mantendo o título visível */
+#listaCategorias {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    padding-right: 0.4rem;
+}
+
+/* Barra de rolagem discreta */
+#listaCategorias::-webkit-scrollbar {
+    width: 6px;
+}
+#listaCategorias::-webkit-scrollbar-thumb {
+    background: var(--borda);
+    border-radius: 3px;
+}
+#listaCategorias::-webkit-scrollbar-thumb:hover {
+    background: var(--azul);
 }
 
 .categoria-btn {
@@ -408,8 +432,7 @@ a {
 
     .sidebar-categorias {
         position: static;
-        max-height: 260px;
-        overflow-y: auto;
+        max-height: none;
     }
 
     .header {

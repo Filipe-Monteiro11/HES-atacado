@@ -4,12 +4,17 @@
 
 :root {
     --azul: #0066CC;
-    --azul-claro: #1a8cff;
-    --preto: #0d0d0d;
-    --preto-suave: #1a1a1a;
-    --cinza: #aaa;
-    --cinza-claro: #ddd;
+    --azul-hover: #1a8cff;
+    --azul-claro: #e6f0ff;
     --branco: #ffffff;
+    --fundo: #f5f8fc;
+    --preto: #0a0a0a;
+    --preto-2: #14161a;
+    --cinza: #5a6b7d;
+    --cinza-claro: #9aa4b2;
+    --borda: #dbe4ee;
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-hover: 0 12px 32px rgba(0, 102, 204, 0.14);
 }
 
 * {
@@ -97,7 +102,7 @@ a {
 .page-title {
     text-align: center;
     padding: 3.5rem 1.5rem;
-    background: linear-gradient(135deg, #0d0d0d 0%, #0a1a2e 100%);
+    background: linear-gradient(135deg, #ffff 0%, #dde4ee 100%);
 }
 
 .page-title h1 {

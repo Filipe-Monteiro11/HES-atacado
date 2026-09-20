@@ -124,16 +124,16 @@ body {
 }
 
 .feed-stage {
-    position: relative;      /* ← necessário */
-    height: 380px;           /* ← altura fixa */
+    position: relative;
+    height: 380px;
     overflow: hidden;
 }
 
 /* =============================================
-   CARROSSEL — CARD (tema claro)
+   CARROSSEL — CARD
    ============================================= */
 .feed-card {
-    position: absolute;      /* ← TODOS no MESMO lugar */
+    position: absolute;      /* ← ESSENCIAL: tira do fluxo normal */
     top: 0;
     left: 0;
     width: 260px;
@@ -154,7 +154,6 @@ body {
     border-color: var(--azul);
 }
 
-/* Posições — card ativo centralizado, vizinhos ao lado */
 .feed-card.active {
     left: 50%;
     transform: translateX(-50%) scale(1);
@@ -190,7 +189,6 @@ body {
     pointer-events: none;
     z-index: 0;
 }
-
 /* ---------- PRODUTOS (grade da página de produtos) ---------- */
 .produtos-grid {
     display: grid;

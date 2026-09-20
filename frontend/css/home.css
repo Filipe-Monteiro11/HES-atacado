@@ -120,20 +120,20 @@ body {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 3rem;            /* espaço para as setas */
+    padding: 0 3rem;
 }
 
 .feed-stage {
-    position: relative;         /* ← necessário */
-    height: 380px;              /* ← altura fixa */
-    overflow: hidden;           /* esconde os cards fora da área */
+    position: relative;      /* ← necessário */
+    height: 380px;           /* ← altura fixa */
+    overflow: hidden;
 }
 
 /* =============================================
    CARROSSEL — CARD (tema claro)
    ============================================= */
 .feed-card {
-    position: absolute;         /* ← TODOS no MESMO lugar */
+    position: absolute;      /* ← TODOS no MESMO lugar */
     top: 0;
     left: 0;
     width: 260px;

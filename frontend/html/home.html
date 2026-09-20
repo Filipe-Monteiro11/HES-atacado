@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HES Atacado — Distribuição de Produtos de Limpeza</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -100,13 +100,14 @@
                 <p class="subtitle">Estamos prontos para atender você</p>
                 <div class="line"></div>
             </div>
-            <div class="info-card">
-             <a href="https://wa.me/5581998801601" target="_blank" rel="noopener" class="info-card-link">
-             <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
-             <h3>WhatsApp</h3>
-             <p>(81) 9 9880-1601 — Clique para conversar</p>
-             </a>
-            </div>
+            <div class="info-cards">
+                <div class="info-card">
+                    <a href="https://wa.me/5581998801601" target="_blank" rel="noopener" class="info-card-link">
+                        <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h3>WhatsApp</h3>
+                        <p>(81) 9 9880-1601 — Clique para conversar</p>
+                    </a>
+                </div>
                 <div class="info-card">
                     <div class="icon"><i class="fa-solid fa-clock"></i></div>
                     <h3>Horário de Funcionamento</h3>
@@ -171,6 +172,6 @@
     </footer>
 
     <script src="{% static 'js/api.js' %}"></script>
-    <script src="{% static 'js/home.js' %}"></script>
+    <script src="{% static 'js/home.js' %}?v=3"></script>
 </body>
 </html>

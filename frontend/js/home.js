@@ -36,11 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const nome = esc(nomeDe(p));
         const cat = esc(categoriaDe(p));
         const img = imagemDe(p);
-        // Link para a página de produtos filtrada pela categoria do produto
         const idCat = p.categoria_id || '';
         const link = `/produtos/?categoria=${idCat}`;
         const imagem = img
-            ? `<img src="${img}" alt="${nome}" loading="lazy">`
+            ? `<img src="${img}" alt="${nome}" loading="lazy" draggable="false">`
             : `<div class="placeholder"><i class="fa-regular fa-image"></i><span>Imagem em breve</span></div>`;
         return `
             <a href="${link}" class="feed-card" data-categoria="${idCat}">
@@ -53,12 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function atualizar() {
+        const N = produtos.length;
+        const metade = Math.floor(N / 2);
         const cards = stage.querySelectorAll('.feed-card');
         cards.forEach((card, i) => {
             card.className = 'feed-card';
-            let diff = i - ativo;
-            if (diff < -2) diff += produtos.length;
-            if (diff > 2) diff -= produtos.length;
+            // distância circular até o card ativo (funciona com qualquer quantidade)
+            const diff = ((i - ativo + N + metade) % N) - metade;
 
             if (diff === 0) card.classList.add('active');
             else if (diff === -1) card.classList.add('left-1');
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (diff === 2) card.classList.add('right-2');
             else card.classList.add('hidden');
         });
-        if (counter) counter.textContent = `${ativo + 1} / ${produtos.length}`;
+        if (counter) counter.textContent = `${ativo + 1} / ${N}`;
     }
 
     function ir(delta) {
@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function carregar() {
         try {
-            // PEDE SÓ OS DESTAQUES DIRETO AO SERVIDOR
             const res = await fetch('/api/produtos/?destaque=1');
             const data = await res.json();
             const lista = Array.isArray(data) ? data : (data.results || []);
@@ -96,8 +95,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    prevBtn.addEventListener('click', () => ir(-1));
-    nextBtn.addEventListener('click', () => ir(1));
+    // Clique num card lateral: traz ele para o centro (só o central abre o link)
+    stage.addEventListener('click', (e) => {
+        const card = e.target.closest('.feed-card');
+        if (!card || card.classList.contains('active')) return;
+        e.preventDefault();
+        const cards = Array.from(stage.querySelectorAll('.feed-card'));
+        ativo = cards.indexOf(card);
+        atualizar();
+    });
+
+    // Swipe no celular
+    let x0 = null;
+    stage.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) ir(dx < 0 ? 1 : -1);
+        x0 = null;
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', () => ir(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => ir(1));
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') ir(-1);

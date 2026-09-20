@@ -334,11 +334,12 @@ body {
     height: 430px;
     display: flex;
     flex-direction: column;
-    background: var(--preto-2);
+    background: var(--branco);            /* era var(--preto-2) */
+    border: 1px solid var(--borda);       /* borda sutil pra destacar do fundo claro */
     border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
-    color: var(--branco);
+    color: var(--preto);                  /* era var(--branco) */
     box-shadow: var(--sombra);
     cursor: pointer;
 
@@ -398,11 +399,11 @@ body {
 /* ---------- TEXTO ---------- */
 .feed-body {
     padding: 1rem 1.2rem 1.2rem;
-    background: var(--preto-2);
+    background: var(--branco);            /* era var(--preto-2) */
 }
 .feed-tag {
     display: inline-block;
-    color: #4da3ff;
+    color: var(--azul);                   /* era #4da3ff, mais legível no branco */
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -413,7 +414,7 @@ body {
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.3;
-    color: var(--branco);
+    color: var(--preto);                  /* era var(--branco) */
 }
 
 /* ---------- SETAS ---------- */

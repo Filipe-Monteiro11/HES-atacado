@@ -317,10 +317,24 @@ a {
     color: var(--preto);
 }
 
-/* CORREÇÃO: remove o sublinhado da descrição (e de todo o card-link) */
+/* Remove qualquer sublinhado do card e da descrição */
 .produto-card,
-.produto-card * {
-    text-decoration: none;
+.produto-card *,
+.produto-card p,
+.produto-card h3,
+.produto-card:hover,
+.produto-card:hover * {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    border-bottom: none;
+}
+
+/* Se a descrição tiver <u>, <ins> ou <a> dentro */
+.produto-card u,
+.produto-card ins,
+.produto-card a {
+    text-decoration: none !important;
+    color: inherit;
 }
 
 /* Descrição completa — sem cortar em 3 linhas */

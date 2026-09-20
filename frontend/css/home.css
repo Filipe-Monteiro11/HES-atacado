@@ -114,7 +114,7 @@ body {
 }
 
 /* =============================================
-   CARROSSEL — CARD (agora é um link <a>)
+   CARROSSEL — CARD (tema claro, é um link <a>)
    ============================================= */
 .feed-card {
     display: block;            /* o link ocupa o card inteiro */
@@ -122,17 +122,18 @@ body {
     width: 260px;
     text-decoration: none;     /* remove o sublinhado do link */
     color: inherit;            /* mantém a cor do texto */
-    background: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--branco);
+    border: 1px solid var(--borda);
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: var(--sombra);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
 }
 
 .feed-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.35);
-    border-color: #0066CC;
+    box-shadow: var(--sombra-hover);
+    border-color: var(--azul);
 }
 
 /* Imagem do card */
@@ -140,7 +141,7 @@ body {
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #222;
+    background: var(--azul-claro);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,23 +155,21 @@ body {
 }
 
 .feed-card .feed-img .placeholder {
-    color: #aaa;
+    color: var(--cinza);
     font-size: 0.9rem;
     text-align: center;
     padding: 1rem;
 }
 
 /* Corpo do card */
-.feed-card .feed-body {
-    padding: 1rem;
-}
+.feed-card .feed-body { padding: 1rem; }
 
 .feed-card .feed-tag {
     display: inline-block;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #1a8cff;
+    color: var(--azul);
     margin-bottom: 0.4rem;
 }
 
@@ -178,7 +177,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    color: #ffffff;
+    color: var(--preto);
 }
 
 /* Posições do carrossel (mantém o efeito 3D/deslocamento) */
@@ -390,6 +389,8 @@ body {
     .logo-img { height: 60px; }
     .nav { gap: 1.2rem; }
     .footer-content { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
+    /* Info cards: 2 por linha no tablet */
+    .info-card { flex: 0 1 calc(50% - 0.75rem); }
 }
 
 /* Carrossel feed no celular */
@@ -403,13 +404,7 @@ body {
     .feed-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
 }
 
-/* Info cards (contato) no tablet e celular */
-@media (max-width: 900px) {
-    .info-cards { grid-template-columns: repeat(2, 1fr); } /* 2x2 no tablet */
-}
+/* Info cards no celular: 1 por linha */
 @media (max-width: 520px) {
-    .info-cards { grid-template-columns: 1fr; } /* 1 por linha no celular */
-}
-@media (max-width: 600px) {
-    .info-card { flex: 0 1 100%; } /* 1 por linha no celular */
+    .info-card { flex: 0 1 100%; }
 }

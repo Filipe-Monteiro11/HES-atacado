@@ -35,7 +35,7 @@ const ALIASES = {
     'equipamentos-de-limpeza-profissional':          ['equipamentos sistemas de limpesa profissional'],
     'farmaceutica-e-hospitalar':                     ['farmaceutica e hospitala'],
     'cozinha-industrial-e-restaurantes-lava-loucas': ['cozinha industrial'],
-    'detergente-sanitizante-em-po':                  ['detergente sitantizante em Pó']
+    'detergente-sanitizante-em-po':                  ['Detergente Sanitizante em Pó']
 };
 
 function normalizar(texto) {
@@ -206,8 +206,11 @@ async function selecionarCategoria(botao, opcoes = {}) {
         return;
     }
 
-    // Ao trocar de categoria, rola até o topo da área de produtos
-    const alvo = document.querySelector('.produtos-area');
+    // Ao trocar de categoria, rola pra cima:
+    //  - computador: até o topo da área de produtos
+    //  - celular: até o BANNER (senão ele fica escondido acima da tela)
+    const celular = window.matchMedia('(max-width: 800px)').matches;
+    const alvo = document.querySelector(celular ? '.page-title' : '.produtos-area');
     if (alvo) {
         // Compensa a altura do header fixo (sticky)
         const header = document.querySelector('.header');

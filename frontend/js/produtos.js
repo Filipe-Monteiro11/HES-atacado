@@ -7,6 +7,42 @@
 const ano = document.getElementById('ano');
 if (ano) ano.textContent = new Date().getFullYear();
 
+// ---------------------------------------------
+// BANNER COM FOTO POR CATEGORIA
+// Chave = nome da categoria em minúsculas e sem acento
+// Valor = nome do arquivo dentro de static/img/categorias/
+// ---------------------------------------------
+const PASTA_BANNERS = '/static/img/categorias/';
+const BANNERS = {
+    'lavanderia': 'lavanderia.png',
+    // 'laticinios': 'laticinios.png',
+    // 'detergente neutro': 'detergente-neutro.png',
+};
+
+function normalizar(texto) {
+    return (texto || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+}
+
+function atualizarBanner(nomeCategoria) {
+    const banner = document.getElementById('bannerCategoria');
+    if (!banner) return;
+
+    const arquivo = BANNERS[normalizar(nomeCategoria)];
+
+    if (arquivo) {
+        banner.style.backgroundImage = `url('${PASTA_BANNERS}${arquivo}')`;
+        banner.classList.add('com-foto');
+    } else {
+        // "Todos os produtos" ou categoria sem foto: volta ao visual padrão
+        banner.style.backgroundImage = '';
+        banner.classList.remove('com-foto');
+    }
+}
+
 // Carrega as categorias na sidebar
 async function carregarCategorias() {
     const container = document.getElementById('listaCategorias');
@@ -41,6 +77,9 @@ async function selecionarCategoria(botao) {
     const nome = botao.dataset.nome || 'Todos os Produtos';
     document.getElementById('tituloCategoria').textContent = nome;
 
+    // Troca a foto do banner conforme a categoria
+    atualizarBanner(nome);
+
     const container = document.getElementById('produtosGrid');
     if (!container) return;
 
@@ -57,8 +96,7 @@ async function selecionarCategoria(botao) {
         container.innerHTML = produtos.map(criarCardProduto).join('');
     }
 
-    // CORRIGIDO: SEMPRE rola até o topo da área de produtos ao trocar de categoria,
-    // para o usuário ver o início da nova categoria (antes só rolava no celular).
+    // SEMPRE rola até o topo da área de produtos ao trocar de categoria
     const areaProdutos = document.querySelector('.produtos-area');
     if (areaProdutos) {
         // Compensa a altura do header fixo (sticky)

@@ -120,6 +120,7 @@ a {
    FOTO DA CATEGORIA — BANNER NO TOPO
    O JS coloca a classe "com-foto" no <body> e define --foto-fundo
    A foto aparece só na área do título (não na página inteira)
+   (no celular a foto vai pra dentro da área de produtos — veja o RESPONSIVO)
    ============================================= */
 body.com-foto .page-title {
     /* película escura por cima da foto (aumente o 0.45 pra escurecer mais) */
@@ -485,7 +486,44 @@ body.com-foto .page-title p {
         font-size: 1.8rem;
     }
 
+    /* ---------------------------------------------
+       BANNER NO CELULAR
+       No celular a lista de categorias fica ENTRE o título e os produtos,
+       então o banner do topo sai da tela quando a pessoa escolhe uma categoria.
+       Por isso a foto aparece aqui, no cabeçalho da área de produtos,
+       que é exatamente onde a página para depois do clique.
+       --------------------------------------------- */
     body.com-foto .page-title {
+        background: linear-gradient(135deg, var(--branco) 0%, var(--azul-claro) 100%);
         padding: 3.5rem 1.5rem;
+    }
+
+    body.com-foto .page-title h1 {
+        color: var(--preto);
+        text-shadow: none;
+    }
+
+    body.com-foto .page-title p {
+        color: var(--cinza);
+    }
+
+    body.com-foto .area-topo {
+        min-height: 150px;
+        align-items: flex-end;
+        padding: 1.2rem;
+        border-bottom: none;
+        border-radius: 12px;
+        background:
+            linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.5)),
+            var(--foto-fundo) center / cover no-repeat;
+    }
+
+    body.com-foto .area-topo h2 {
+        color: var(--branco);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    body.com-foto .area-topo .contador {
+        color: rgba(255, 255, 255, 0.9);
     }
 }

@@ -66,11 +66,18 @@ async function descobrirFundo(nomeCategoria) {
 
     // nomes a testar, em ordem de prioridade:
     // 1) apelido  2) nome com espaços  3) nome com hífen
-    const nomes = [
+    const base = [
         ...(ALIASES[slug] || []),
         slug.replace(/-/g, ' '),
         slug
     ];
+
+    // também testa variações (minúscula e as duas formas de gravar acento: NFC/NFD),
+    // porque nomes com acento às vezes ficam gravados diferente no servidor
+    const nomes = [];
+    base.forEach(n => {
+        nomes.push(n, n.toLowerCase(), n.normalize('NFC'), n.normalize('NFD'));
+    });
 
     // monta todas as combinações nome × extensão e testa tudo ao mesmo tempo
     const urls = [];
@@ -206,11 +213,9 @@ async function selecionarCategoria(botao, opcoes = {}) {
         return;
     }
 
-    // Ao trocar de categoria, rola pra cima:
-    //  - computador: até o topo da área de produtos
-    //  - celular: até o BANNER (senão ele fica escondido acima da tela)
-    const celular = window.matchMedia('(max-width: 800px)').matches;
-    const alvo = document.querySelector(celular ? '.page-title' : '.produtos-area');
+    // Ao trocar de categoria, rola até o topo da área de produtos
+    // (no celular o banner fica dentro dessa área, então aparece junto)
+    const alvo = document.querySelector('.produtos-area');
     if (alvo) {
         // Compensa a altura do header fixo (sticky)
         const header = document.querySelector('.header');

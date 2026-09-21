@@ -14,12 +14,26 @@ if (ano) ano.textContent = new Date().getFullYear();
 //   Ex.: "Laticínios"                 -> laticinios.png
 //        "Dispensers — Linha Gold"    -> dispensers-linha-gold.png
 // Basta colocar a imagem em static/img/ com esse nome.
+// Se o arquivo tiver outro nome, adicione no ALIASES abaixo.
 // Se não existir imagem pra categoria, fica o visual padrão.
 // ---------------------------------------------
 const PASTA_BANNERS = '/static/img/';
 const EXTENSOES = ['png', 'jpg', 'jpeg', 'webp'];   // formatos aceitos
 const cacheFundos = {};
 let categoriaAtual = '';
+
+// Categorias cujo arquivo NÃO tem o nome padrão (slug).
+// Chave = slug da categoria | Valor = lista de nomes de arquivo (sem extensão)
+const ALIASES = {
+    'dispensers-linha-gold':     ['linha gold'],
+    'dispensers-linha-care':     ['linha care'],
+    'dispensers-linha-standart': ['linha standart'],
+
+    'equipamentos-sistemas-de-limpeza-profissional': ['equipamentos de limpeza profissional'],
+    'equipamentos-de-limpeza-profissional':          ['equipamentos de limpeza profissional'],
+    'farmaceutica-e-hospitalar':                     ['farmaceutica e hospitalar'],
+    'frigorificos-e-abatedouros':                    ['frigorifico e abatedouros']
+};
 
 function normalizar(texto) {
     return (texto || '')
@@ -47,11 +61,20 @@ async function descobrirFundo(nomeCategoria) {
     if (!slug) return null;
     if (slug in cacheFundos) return cacheFundos[slug];
 
-    for (const ext of EXTENSOES) {
-        const url = `${PASTA_BANNERS}${slug}.${ext}`;
-        if (await testarImagem(url)) {
-            cacheFundos[slug] = url;
-            return url;
+    // nomes a testar: o padrão (slug) + apelidos (com espaço e com hífen)
+    const nomes = [slug];
+    (ALIASES[slug] || []).forEach(n => {
+        nomes.push(n);
+        nomes.push(n.replace(/ /g, '-'));
+    });
+
+    for (const nome of nomes) {
+        for (const ext of EXTENSOES) {
+            const url = encodeURI(`${PASTA_BANNERS}${nome}.${ext}`);
+            if (await testarImagem(url)) {
+                cacheFundos[slug] = url;
+                return url;
+            }
         }
     }
     cacheFundos[slug] = null;

@@ -12,7 +12,7 @@ if (ano) ano.textContent = new Date().getFullYear();
 // Chave = nome da categoria em minúsculas e sem acento
 // Valor = nome do arquivo dentro de static/img/categorias/
 // ---------------------------------------------
-const PASTA_BANNERS = '/static/img/categorias/';
+const PASTA_BANNERS = '/static/img/';
 const BANNERS = {
     'lavanderia': 'lavanderia.png',
     // 'laticinios': 'laticinios.png',
@@ -96,13 +96,16 @@ async function selecionarCategoria(botao) {
         container.innerHTML = produtos.map(criarCardProduto).join('');
     }
 
-    // SEMPRE rola até o topo da área de produtos ao trocar de categoria
-    const areaProdutos = document.querySelector('.produtos-area');
-    if (areaProdutos) {
+    // Ao trocar de categoria, rola até o banner (se tem foto) ou até os produtos
+    const banner = document.getElementById('bannerCategoria');
+    const alvo = (banner && banner.classList.contains('com-foto'))
+        ? banner
+        : document.querySelector('.produtos-area');
+    if (alvo) {
         // Compensa a altura do header fixo (sticky)
         const header = document.querySelector('.header');
-        const offset = header ? header.offsetHeight + 12 : 12;
-        const topo = areaProdutos.getBoundingClientRect().top + window.pageYOffset - offset;
+        const offset = header ? header.offsetHeight : 0;
+        const topo = alvo.getBoundingClientRect().top + window.pageYOffset - offset;
         window.scrollTo({ top: topo, behavior: 'smooth' });
     }
 }

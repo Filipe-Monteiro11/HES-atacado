@@ -8,16 +8,18 @@ const ano = document.getElementById('ano');
 if (ano) ano.textContent = new Date().getFullYear();
 
 // ---------------------------------------------
-// BANNER COM FOTO POR CATEGORIA
-// Chave = nome da categoria em minúsculas e sem acento
-// Valor = nome do arquivo dentro de static/img/categorias/
+// FOTO DE FUNDO AUTOMÁTICA POR CATEGORIA
+// O nome do arquivo é o nome da categoria "limpo":
+//   minúsculas, sem acento, e tudo que não é letra/número vira "-"
+//   Ex.: "Laticínios"                 -> laticinios.png
+//        "Dispensers — Linha Gold"    -> dispensers-linha-gold.png
+// Basta colocar a imagem em static/img/ com esse nome.
+// Se não existir imagem pra categoria, fica o visual padrão.
 // ---------------------------------------------
 const PASTA_BANNERS = '/static/img/';
-const BANNERS = {
-    'lavanderia': 'lavanderia.png',
-    // 'laticinios': 'laticinios.png',
-    // 'detergente neutro': 'detergente-neutro.png',
-};
+const EXTENSOES = ['png', 'jpg', 'jpeg', 'webp'];   // formatos aceitos
+const cacheFundos = {};
+let categoriaAtual = '';
 
 function normalizar(texto) {
     return (texto || '')
@@ -27,14 +29,45 @@ function normalizar(texto) {
         .trim();
 }
 
-function atualizarBanner(nomeCategoria) {
-    const arquivo = BANNERS[normalizar(nomeCategoria)];
+function gerarSlug(texto) {
+    return normalizar(texto).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
 
-    if (arquivo) {
-        document.body.style.setProperty('--foto-fundo', `url('${PASTA_BANNERS}${arquivo}')`);
+function testarImagem(url) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+    });
+}
+
+async function descobrirFundo(nomeCategoria) {
+    const slug = gerarSlug(nomeCategoria);
+    if (!slug) return null;
+    if (slug in cacheFundos) return cacheFundos[slug];
+
+    for (const ext of EXTENSOES) {
+        const url = `${PASTA_BANNERS}${slug}.${ext}`;
+        if (await testarImagem(url)) {
+            cacheFundos[slug] = url;
+            return url;
+        }
+    }
+    cacheFundos[slug] = null;
+    return null;
+}
+
+async function atualizarBanner(nomeCategoria) {
+    const url = await descobrirFundo(nomeCategoria);
+
+    // se o usuário já clicou em outra categoria enquanto carregava, ignora
+    if (nomeCategoria !== categoriaAtual) return;
+
+    if (url) {
+        document.body.style.setProperty('--foto-fundo', `url('${url}')`);
         document.body.classList.add('com-foto');
     } else {
-        // "Todos os produtos" ou categoria sem foto: volta ao visual padrão
         document.body.style.removeProperty('--foto-fundo');
         document.body.classList.remove('com-foto');
     }
@@ -75,6 +108,7 @@ async function selecionarCategoria(botao) {
     document.getElementById('tituloCategoria').textContent = nome;
 
     // Troca a foto do banner conforme a categoria
+    categoriaAtual = nome;
     atualizarBanner(nome);
 
     const container = document.getElementById('produtosGrid');

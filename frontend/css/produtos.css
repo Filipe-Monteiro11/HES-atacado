@@ -117,23 +117,25 @@ a {
 }
 
 /* =============================================
-   FOTO DE FUNDO DA PÁGINA (por categoria)
+   FOTO DA CATEGORIA — BANNER NO TOPO
    O JS coloca a classe "com-foto" no <body> e define --foto-fundo
+   A foto aparece só na área do título (não na página inteira)
    ============================================= */
-body.com-foto::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    /* película branca por cima da foto (aumente o 0.35 pra clarear mais) */
+body.com-foto .page-title {
+    /* película escura por cima da foto (aumente o 0.45 pra escurecer mais) */
     background:
-        linear-gradient(rgba(245, 248, 252, 0.35), rgba(245, 248, 252, 0.35)),
+        linear-gradient(rgba(10, 10, 10, 0.45), rgba(10, 10, 10, 0.45)),
         var(--foto-fundo) center / cover no-repeat;
+    padding: 5rem 1.5rem;   /* altura do banner */
 }
 
-/* título deixa a foto aparecer por trás */
-body.com-foto .page-title {
-    background: transparent;
+body.com-foto .page-title h1 {
+    color: var(--branco);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.com-foto .page-title p {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* =============================================
@@ -481,5 +483,9 @@ body.com-foto .page-title {
 
     .page-title h1 {
         font-size: 1.8rem;
+    }
+
+    body.com-foto .page-title {
+        padding: 3.5rem 1.5rem;
     }
 }

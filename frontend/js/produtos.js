@@ -28,18 +28,15 @@ function normalizar(texto) {
 }
 
 function atualizarBanner(nomeCategoria) {
-    const banner = document.getElementById('bannerCategoria');
-    if (!banner) return;
-
     const arquivo = BANNERS[normalizar(nomeCategoria)];
 
     if (arquivo) {
-        banner.style.backgroundImage = `url('${PASTA_BANNERS}${arquivo}')`;
-        banner.classList.add('com-foto');
+        document.body.style.setProperty('--foto-fundo', `url('${PASTA_BANNERS}${arquivo}')`);
+        document.body.classList.add('com-foto');
     } else {
         // "Todos os produtos" ou categoria sem foto: volta ao visual padrão
-        banner.style.backgroundImage = '';
-        banner.classList.remove('com-foto');
+        document.body.style.removeProperty('--foto-fundo');
+        document.body.classList.remove('com-foto');
     }
 }
 
@@ -96,15 +93,12 @@ async function selecionarCategoria(botao) {
         container.innerHTML = produtos.map(criarCardProduto).join('');
     }
 
-    // Ao trocar de categoria, rola até o banner (se tem foto) ou até os produtos
-    const banner = document.getElementById('bannerCategoria');
-    const alvo = (banner && banner.classList.contains('com-foto'))
-        ? banner
-        : document.querySelector('.produtos-area');
+    // Ao trocar de categoria, rola até o topo da área de produtos
+    const alvo = document.querySelector('.produtos-area');
     if (alvo) {
         // Compensa a altura do header fixo (sticky)
         const header = document.querySelector('.header');
-        const offset = header ? header.offsetHeight : 0;
+        const offset = header ? header.offsetHeight + 12 : 12;
         const topo = alvo.getBoundingClientRect().top + window.pageYOffset - offset;
         window.scrollTo({ top: topo, behavior: 'smooth' });
     }

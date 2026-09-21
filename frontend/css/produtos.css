@@ -103,9 +103,6 @@ a {
     text-align: center;
     padding: 3.5rem 1.5rem;
     background: linear-gradient(135deg, var(--branco) 0%, var(--azul-claro) 100%);
-    background-size: cover;
-    background-position: right 60%;   /* ajuste aqui se quiser mostrar mais em cima/embaixo */
-    background-repeat: no-repeat;
 }
 
 .page-title h1 {
@@ -119,29 +116,24 @@ a {
     margin-top: 0.5rem;
 }
 
-/* Quando a categoria tem foto (aplicada via JS) */
-.page-title.com-foto {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 280px;
-    padding: 4rem 1.5rem;
-    text-align: left;   /* o lado esquerdo da foto é o espaço livre */
+/* =============================================
+   FOTO DE FUNDO DA PÁGINA (por categoria)
+   O JS coloca a classe "com-foto" no <body> e define --foto-fundo
+   ============================================= */
+body.com-foto::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    /* película branca por cima da foto (aumente o 0.35 pra clarear mais) */
+    background:
+        linear-gradient(rgba(245, 248, 252, 0.35), rgba(245, 248, 252, 0.35)),
+        var(--foto-fundo) center / cover no-repeat;
 }
 
-.page-title.com-foto .container {
-    position: relative;
-    width: 100%;
-}
-
-/* No celular a foto fica atrás do texto: clareia pra manter legível */
-@media (max-width: 800px) {
-    .page-title.com-foto::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.6);
-    }
+/* título deixa a foto aparecer por trás */
+body.com-foto .page-title {
+    background: transparent;
 }
 
 /* =============================================

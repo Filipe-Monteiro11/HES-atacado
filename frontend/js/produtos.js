@@ -8,13 +8,14 @@ const ano = document.getElementById('ano');
 if (ano) ano.textContent = new Date().getFullYear();
 
 // ---------------------------------------------
-// FOTO DE FUNDO AUTOMÁTICA POR CATEGORIA
+// FOTO DE BANNER AUTOMÁTICA POR CATEGORIA
 // O nome do arquivo é o nome da categoria "limpo":
-//   minúsculas, sem acento, e tudo que não é letra/número vira "-"
-//   Ex.: "Laticínios"                 -> laticinios.png
-//        "Dispensers — Linha Gold"    -> dispensers-linha-gold.png
+//   minúsculas, sem acento. Aceita COM ESPAÇO ou COM HÍFEN:
+//   Ex.: "Laticínios"                  -> laticinios.png
+//        "Higiene Pessoal / Institucional" -> higiene pessoal institucional.png
+//                                          (ou higiene-pessoal-institucional.png)
 // Basta colocar a imagem em static/img/ com esse nome.
-// Se o arquivo tiver outro nome, adicione no ALIASES abaixo.
+// Se o arquivo tiver outro nome (ou erro de digitação), use o ALIASES abaixo.
 // Se não existir imagem pra categoria, fica o visual padrão.
 // ---------------------------------------------
 const PASTA_BANNERS = '/static/img/';
@@ -22,18 +23,19 @@ const EXTENSOES = ['webp', 'png', 'jpg', 'jpeg'];   // formatos aceitos (ordem =
 const cacheFundos = {};
 let categoriaAtual = '';
 
-// Categorias cujo arquivo NÃO tem o nome padrão (slug).
-// Chave = slug da categoria | Valor = lista de nomes de arquivo (sem extensão)
-// As 3 linhas de dispensers (Gold, Care e Standart) usam a mesma imagem: dispensers.png
+// Categorias cujo arquivo NÃO tem o nome da categoria.
+// Chave = slug da categoria | Valor = lista de nomes de arquivo (sem extensão, IGUAL ao arquivo)
 const ALIASES = {
+    // As 3 linhas de dispensers usam a mesma imagem: dispensers.png
     'dispensers-linha-gold':     ['dispensers'],
     'dispensers-linha-care':     ['dispensers'],
     'dispensers-linha-standart': ['dispensers'],
 
-    'equipamentos-sistemas-de-limpeza-profissional': ['equipamentos de limpeza profissional'],
-    'equipamentos-de-limpeza-profissional':          ['equipamentos de limpeza profissional'],
-    'farmaceutica-e-hospitalar':                     ['farmaceutica e hospitalar'],
-    'frigorificos-e-abatedouros':                    ['frigorifico e abatedouros']
+    'equipamentos-sistemas-de-limpeza-profissional': ['equipamentos sistemas de limpesa profissional'],
+    'equipamentos-de-limpeza-profissional':          ['equipamentos sistemas de limpesa profissional'],
+    'farmaceutica-e-hospitalar':                     ['farmaceutica e hospitala'],
+    'cozinha-industrial-e-restaurantes-lava-loucas': ['cozinha industrial'],
+    'detergente-sanitizante-em-po':                  ['detergente sitantizante em Pó']
 };
 
 function normalizar(texto) {
@@ -62,21 +64,27 @@ async function descobrirFundo(nomeCategoria) {
     if (!slug) return null;
     if (slug in cacheFundos) return cacheFundos[slug];
 
-    // nomes a testar: apelido (se existir) e depois o padrão (slug)
-    const nomes = [...(ALIASES[slug] || []), slug];
+    // nomes a testar, em ordem de prioridade:
+    // 1) apelido  2) nome com espaços  3) nome com hífen
+    const nomes = [
+        ...(ALIASES[slug] || []),
+        slug.replace(/-/g, ' '),
+        slug
+    ];
 
-    for (const nome of nomes) {
-        // testa todas as extensões ao mesmo tempo (bem mais rápido)
-        const urls = EXTENSOES.map(ext => encodeURI(`${PASTA_BANNERS}${nome}.${ext}`));
-        const resultados = await Promise.all(urls.map(testarImagem));
-        const achou = resultados.indexOf(true);
-        if (achou !== -1) {
-            cacheFundos[slug] = urls[achou];
-            return urls[achou];
+    // monta todas as combinações nome × extensão e testa tudo ao mesmo tempo
+    const urls = [];
+    for (const nome of new Set(nomes)) {
+        for (const ext of EXTENSOES) {
+            urls.push(encodeURI(`${PASTA_BANNERS}${nome}.${ext}`));
         }
     }
-    cacheFundos[slug] = null;
-    return null;
+
+    const resultados = await Promise.all(urls.map(testarImagem));
+    const achou = resultados.indexOf(true);   // primeira na ordem de prioridade
+
+    cacheFundos[slug] = achou !== -1 ? urls[achou] : null;
+    return cacheFundos[slug];
 }
 
 async function atualizarBanner(nomeCategoria) {
